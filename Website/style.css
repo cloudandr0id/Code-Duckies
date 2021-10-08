@@ -1,66 +1,120 @@
-body {
-	background-color: rgb(20, 20, 20);
+:root {
+  --color-primary: #fbf236;
+  --color-white: #ffffff;
+  --color-grey: #696a6a;
 }
 
-h1 {
-	color: rgb( 255, 255, 255);
-	font-family: "Times New Roman", serif;
-	text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 h2 {
-	color: rgb( 245, 245, 245);
-	font-family: "Times New Roman", serif;
-	text-align: left;
+  color: rgb( 255, 255, 255);
+  font-family: "Times New Roman", serif;
+  text-align: center;
 }
 
 h3 {
-	color: rgb( 235, 235, 235);
-	font-family: "Times New Roman", serif;
-	text-align: left;
+  color: rgb( 245, 245, 245);
+  font-family: "Times New Roman", serif;
+  text-align: left;
+}
+
+h4 {
+  color: rgb( 235, 235, 235);
+  font-family: "Times New Roman", serif;
+  text-align: left;
+}
+
+body {
+  font-family: sans-serif;
+  background-color: rgb(20, 20, 20);
+}
+
+.logo {
+  color: var(--color-white);
+  font-size: 30px;
+}
+
+.logo span {
+  color: var(--color-primary);
+}
+
+.menu-bar {
+  background-color: var(--color-grey);
+  height: 80px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5%;
+  position: relative;
+}
+
+.menu-bar ul {
+  list-style: none;
+  display: flex;
+}
+
+.menu-bar ul li {
+  padding: 10px 20px;
+  position: relative;
+}
+
+.menu-bar ul li a {
+  font-size: 20px;
+  color: var(--color-white);
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.menu-bar ul li a:hover {
+  color: var(--color-primary);
 }
 
 #container {
-	width: 800px;
-	margin-left: auto;
-	margin-right: auto;
+  width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 
-	color: rgb( 200, 200, 200);
-	font-family: Arial, sans-serif;
-	text-align: justify;
+  color: rgb( 200, 200, 200);
+  font-family: Arial, sans-serif;
+  text-align: justify;
 }
 
 #content {
-	padding: 10px;
+  padding: 10px;
 }
 
 #nav {
-	width: 180px;
-	float: left;
+  width: 180px;
+  float: left;
 }
 
 #main {
-	width: 600px;
-	float: right;
+  width: 600px;
+  float: right;
 }
 
 #footer {
-	clear: both;
-	padding 10px;
-	text-align: right;
+  clear: both;
+  padding 10px;
+  text-align: right;
 }
 
 #nav .selected {
-	font-weight: bold;
+  font-weight: bold;
 }
 
-	text-decoration: none;
+  text-decoration: none;
 }
 
 #nav ul {
-	list-style-type: none;
-	padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 
 #header {
-	background-color: rgb(0, 0, 50);
+  background-color: rgb(0, 0, 50);
