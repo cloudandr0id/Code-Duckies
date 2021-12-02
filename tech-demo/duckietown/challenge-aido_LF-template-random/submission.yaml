@@ -1,0 +1,10 @@
+# challenge name(s); defaults to all compatible challenges
+# challenge: [c1,c2]
+
+# conventions + format
+protocol: aido2_db18_agent-z2
+# any user label - displayed in "challenges list"
+user-label: template-random
+# any JSON payload
+user-payload: {}
+validation_challenge: aido-hello-sim-validation
