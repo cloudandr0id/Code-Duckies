@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Visual Programming for Duckietown Autonomous Robots</title>
+
+  <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css">
+  <link rel="stylesheet" href="styles/index.css">
+</head>
+
+<body mode="maker">
+  <header class="mdl-color--cyan-500">
+    <h1 class="mode-maker">Welcome to CodeDuckies</h1>
+    <h1 class="mode-edit mode-blockly">Write Your Code Here</h1>
+  </header>
+
+  <main>
+    <div><p class="hint mode-maker">Initial form to connect to Duckiebots.<br>Click the duck to begin</p>
+    <button class="mode-maker mdl-button" id="edit"><img src="pictures/Duck.png" height="35" width="35" /></button>
+    <button class="mode-edit mdl-button mdl-js-button" id="done">Done</button>
+    <!need to add functions to stop button>
+    <button class="mode-blockly mdl-button mdl-js0button">Stop</button>
+    <button class="mode-blockly mdl-button mdl-js-button" id="save">Play</button></div>
+
+    <div class="blockly-editor">
+      <div id="blocklyDiv" style="height: 100%; width: 100%;"></div>
+      <xml id="toolbox" style="display: none">
+        <block type="controls_repeat_ext">
+          <value name="TIMES">
+            <shadow type="math_number">
+              <field name="NUM">5</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="play_sound"></block>
+      </xml>
+    </div>
+  </main>
+
+  <script src="https://unpkg.com/blockly"></script>
+  <script src="scripts/music_maker.js"></script>
+  <script src="scripts/sound_blocks.js"></script>
+  <script src="scripts/main.js"></script>
+
+</body>
+</html>
