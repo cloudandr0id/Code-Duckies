@@ -18,18 +18,31 @@
   </header>
 
   <main>
-    <div class="maker">
-      <div>
-        <div class="button DuckLogo"><img src="pictures/Duck.png"></div>
-      </div>
-    </div>
-    <div class="maker">
-      <div>
-        <p class="text message holder">This page will be form to connect to robot</p>
+    <div><p class="hint mode-maker">Initial form to connect to Duckiebots.<br>Click the duck to begin</p>
+    <button class="mode-maker mdl-button" id="edit"><img src="pictures/Duck.png" height="35" width="35" /></button>
+    <button class="mode-edit mdl-button mdl-js-button" id="done">Done</button>
+    <!need to add functions to stop button>
+    <button class="mode-blockly mdl-button mdl-js0button">Stop</button>
+    <button class="mode-blockly mdl-button mdl-js-button" id="save">Play</button></div>
 
-    <a href="coding.html">Start coding</a>
+    <div class="blockly-editor">
+      <div id="blocklyDiv" style="height: 100%; width: 100%;"></div>
+      <xml id="toolbox" style="display: none">
+        <block type="controls_repeat_ext">
+          <value name="TIMES">
+            <shadow type="math_number">
+              <field name="NUM">5</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="play_sound"></block>
+      </xml>
+    </div>
+  </main>
 
   <script src="https://unpkg.com/blockly"></script>
+  <script src="scripts/music_maker.js"></script>
+  <script src="scripts/sound_blocks.js"></script>
   <script src="scripts/main.js"></script>
 
 </body>

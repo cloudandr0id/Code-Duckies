@@ -37,8 +37,8 @@ h1 {
   top: 64px;
   left: -400px;
   transition: left .4s;
-  height: 460px;
-  width: 400px;
+  height: 80%;
+  width: 80%;
   background-color: #eee;
 }
 
@@ -50,8 +50,8 @@ h1 {
   display: flex;
   flex-flow: column;
   justify-content: space-between;
-  height: 460px;
-  width: 400px;
+  height: 80%;
+  width: 80%;
 }
 
 .maker > div {

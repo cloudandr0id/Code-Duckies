@@ -33,7 +33,7 @@
   }
 
   function handleSave() {
-    document.body.setAttribute('mode', 'edit');
+    // ros code goes to send bot action
     save(currentButton);
   }
 
@@ -59,7 +59,7 @@
     loadWorkspace(currentButton);
   }
 
-  document.querySelector('#edit').addEventListener('click', enableEditMode);
+  document.querySelector('#edit').addEventListener('click', enableBlocklyMode);
   document.querySelector('#done').addEventListener('click', enableMakerMode);
   document.querySelector('#save').addEventListener('click', handleSave);
 
