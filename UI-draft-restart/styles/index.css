@@ -19,13 +19,8 @@ table {
   height: 100%;
   width: 100%;
 }
-.blocklyArea {
-  position: absolute;
-  top: 64px;
-  left: 0px;
-  transition: left .4s;
+#blocklyArea {
   height: 99%;
-  width: 99%;
   background: lightgray;
   text-align: center;
 }
