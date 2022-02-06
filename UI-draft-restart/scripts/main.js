@@ -7,19 +7,6 @@
 
   let currentButton;
 
-  function handlePlay(event) {
-    loadWorkspace(event.target);
-    let code = Blockly.JavaScript.workspaceToCode(Blockly.getMainWorkspace());
-    code += 'MusicMaker.play();';
-    // Eval can be dangerous. For more controlled execution, check
-    // https://github.com/NeilFraser/JS-Interpreter.
-    try {
-      eval(code);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   function loadWorkspace(button) {
     const workspace = Blockly.getMainWorkspace();
     if (button.blocklySave) {
@@ -32,7 +19,7 @@
         Blockly.getMainWorkspace());
   }
 
-  function handleSave() {
+  function handleStart() {
     // ros code goes to send bot action
     save(currentButton);
   }
@@ -65,32 +52,6 @@
 
   enableMakerMode();
 
-  const toolbox = {
-    'kind': 'flyoutToolbox',
-    'contents': [
-      {
-        'kind': 'block',
-        'type': 'controls_repeat_ext',
-        'inputs': {
-          'TIMES': {
-            'shadow': {
-              'type': 'math_number',
-              'fields': {
-                'NUM': 5,
-              },
-            },
-          },
-        },
-      },
-      {
-        'kind': 'block',
-        'type': 'play_sound',
-      },
-    ],
-  };
-
-  Blockly.inject('blocklyDiv', {
-    toolbox: toolbox,
-    scrollbars: false,
-  });
 })();
+
+

@@ -8,21 +8,26 @@ body {
   overflow: hidden;
 }
 header {
-  background-color: lightblue;
-  width: 100%;
+  padding: 10px;
+  text-align: center;
+  background: lightblue;
+  font-size: 30px;
 }
 h1 {
   font-weight: normal;
   font-size: 140%;
 }
-table {
-  height: 100%;
-  width: 100%;
+
+#startStopButtons {
+  text-align: right;
 }
+#settingsMenu {
+  float: left;
+  text-align: left;
+}
+
 #blocklyArea {
   height: 99%;
-  background: lightgray;
-  text-align: center;
 }
 
 .mode-edit,
@@ -37,14 +42,26 @@ table {
   display: block;
 }
 
-.button {
-  width: 120px;
-  height: 140px;
-  color: #fff;
-  font-size: 3em;
+.startbutton {
+  background-color: lightgreen;
   text-align: center;
   vertical-align: middle;
-  line-height: 140px;
+  border-radius: 12px;
+  font-size: 20px;
+}
+.stopbutton {
+  background-color: lightcoral;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 12px;
+  font-size: 20px;
+}
+.settingsMenu {
+  background-color: lightgrey;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 12px;
+  font-size: 20px;
 }
 
 .mdl-button {
