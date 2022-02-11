@@ -18,7 +18,7 @@ h1 {
   font-size: 140%;
 }
 
-#startStopButtons {
+.startStopButtons {
   text-align: right;
 }
 #settingsMenu {
@@ -42,14 +42,14 @@ h1 {
   display: block;
 }
 
-.startbutton {
+#startbutton {
   background-color: lightgreen;
   text-align: center;
   vertical-align: middle;
   border-radius: 12px;
   font-size: 20px;
 }
-.stopbutton {
+#stopbutton {
   background-color: lightcoral;
   text-align: center;
   vertical-align: middle;
