@@ -1,5 +1,12 @@
 (function() {
 
+// create variables to be used inside functions
+let currentButton;
+
+
+// master function to create blockly page
+function main()
+{
 var blocklyArea = document.getElementById('blocklyArea');
 var blocklyDiv = document.getElementById('blocklyDiv');
 var demoWorkspace = Blockly.inject(blocklyDiv,
@@ -25,5 +32,18 @@ var onresize = function(e) {
 window.addEventListener('resize', onresize, false);
 onresize();
 Blockly.svgResize(demoWorkspace);
+}
+
+function settingsMessage()
+{
+  alert("You have clicked on settings");
+}
+
+// run the main executables to build blockly workspace
+main();
+
+// create aditional listener buttons for settings, start and stop
+document.getElementById('settingsMenu').addEventListener( 'click', settingsMessage );
+
 
 })();
