@@ -37,11 +37,22 @@ var onresize = function(e) {
  */
 function settingsMessage()
 {
-  // placeholder to currently verify that the button works
-  alert("You have clicked on settings");
+
+  // initialize function/variables
+  var click = document.getElementsByClassName('settignsDropdown-Content');
+
+  // check what the current display type for the list is and change it
+  if( click.style.display == 'none' ) {
+    click.style.display = 'block';
+    alert("none is the way");
+  }
+  else{
+    click.style.display = 'none';
+  }
 
   // call function to show the dropdown content
-
+  document.getElementById("settingsDropdown").classList.toggle("show");
+  
   // close the dropdown if the user clicks outside of dropdown
     // create event listener listening for any action outside of dropdown buttons
 
@@ -114,7 +125,7 @@ buildBlocklyWorkspace();
 
 
 // create aditional listener buttons for settings, start and stop
-document.getElementById( 'settingsMenu' ).addEventListener( 'click', settingsMessage );
+document.getElementById( 'settingDropBtn' ).addEventListener( 'click', settingsMessage );
 document.getElementById( 'startbutton' ).addEventListener( 'click', startButtonLogic );
 document.getElementById( 'stopbutton' ).addEventListener( 'click', stopButtonLogic );
 
@@ -124,5 +135,21 @@ document.getElementById( 'stopbutton' ).addEventListener( 'click', stopButtonLog
 window.addEventListener('resize', onresize, false);
 onresize();
 Blockly.svgResize(demoWorkspace);
+
+
+
+// create listener to make dropdown menu for settings disappear.
+window.onclick = function(event){
+  if( !event.target.matches('#settingDropBtn')){
+    var dropdowns = document.getElementsByClassName("settingsDropdown-Content");
+    var i;
+    for( i=0; i<dropdowns.length; i++ ){
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')){
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
 
 })();

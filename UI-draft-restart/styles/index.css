@@ -21,7 +21,7 @@ h1 {
 .startStopButtons {
   text-align: right;
 }
-#settingsMenu {
+.settingDropdown {
   float: left;
   text-align: left;
 }
@@ -48,6 +48,7 @@ h1 {
   vertical-align: middle;
   border-radius: 12px;
   font-size: 20px;
+  cursor: pointer;
 }
 #stopbutton {
   background-color: lightcoral;
@@ -55,16 +56,44 @@ h1 {
   vertical-align: middle;
   border-radius: 12px;
   font-size: 20px;
+  cursor: pointer;
 }
-.settingsMenu {
+
+#settingDropBtn {
   background-color: lightgrey;
   text-align: center;
   vertical-align: middle;
   border-radius: 12px;
   font-size: 20px;
+  cursor: pointer;
 }
 
 .mdl-button {
   margin: 1em 0;
   float: right;
 }
+
+.settingsDropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.settingsDropdown-Content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.settingsDropdown-Content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.settingsDropdown-Content a:hover {background-color: #ddd};
+
+.show {display: block;}
