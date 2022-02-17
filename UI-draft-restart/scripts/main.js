@@ -39,19 +39,12 @@ function settingsMessage()
 {
 
   // initialize function/variables
-  var click = document.getElementsByClassName('settignsDropdown-Content');
+  document.getElementById("dropdown").classList.toggle("active");
 
   // check what the current display type for the list is and change it
-  if( click.style.display == 'none' ) {
-    click.style.display = 'block';
-    alert("none is the way");
-  }
-  else{
-    click.style.display = 'none';
-  }
+
 
   // call function to show the dropdown content
-  document.getElementById("settingsDropdown").classList.toggle("show");
   
   // close the dropdown if the user clicks outside of dropdown
     // create event listener listening for any action outside of dropdown buttons
