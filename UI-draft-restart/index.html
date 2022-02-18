@@ -11,10 +11,28 @@
     <h1 class="mode-maker">Welcome to the visual programming tool for Duckietown</h1>
   </header>
   
+  <div class ="formArea">
+    <p style="font-size: 18px;"><strong>Insert information to connect to duckiebot</strong></p>
+    <form method="POST"" action="overlay.html">
+      <div class="formRow">
+        <label for="ipAddress">IP Address:</label>
+        <p><input type="text" id="ipAddress" name="ipAddress"></p>
+      </div>
+      <div class="formRow">
+        <label for="port">Port:</label>
+        <p><input type="text" id="port" name="port"></p>
+      </div>
+      <div class="formSubmit">
+        <p>Press duck to continue</p>
+        <button id="submit"><img src="pictures/Duck.png" height="35" width="35" /></button>
+      </div>
+      
+    </form>
+  </div>
+  
 
-  <p>Area to insert information to connect to duckiebot</p>
 
-  <p>Press duck to continue</p>
-  <button id="continue"><a href="overlay.html"><img src="pictures/Duck.png" height="35" width="35" /></a></button>
+  
+  
 </body>
 </html>
