@@ -1,10 +1,18 @@
 (function() {
+
+
+
+  // global variables
+var demoWorkspace;
+
+
+  
 // master function to create blockly page
 function buildBlocklyWorkspace()
 {
 var blocklyArea = document.getElementById('blocklyArea');
 var blocklyDiv = document.getElementById('blocklyDiv');
-var demoWorkspace = Blockly.inject(blocklyDiv,
+demoWorkspace = Blockly.inject(blocklyDiv,
     {media: '/media/',
      toolbox: document.getElementById('toolbox')});
 var onresize = function(e) {
@@ -29,6 +37,50 @@ var onresize = function(e) {
 
 
 /*
+ * Name: exportBlocks
+ * Algorithm: uses xml to download current project
+ * Input/Parameters: probably needs to have blocks in the workspace already
+ * Output: saves a file if possible
+ * Notes: none
+ */
+function exportBlocks() 
+{
+  try {
+    var xml = Blockly.Xml.workspaceToDom(demoWorkspace);
+    var xml_text = Blockly.Xml.domToText(xml);
+	  
+    var link = document.createElement('a');
+    link.download="project.txt";
+    link.href="data:application/octet-stream;utf-8," + encodeURIComponent(xml_text);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  } catch (e) {
+    window.location.href="data:application/octet-stream;utf-8," + encodeURIComponent(xml_text);
+    alert(e);
+  }
+}
+
+
+
+function importBlocksFile(element) {
+  try {	
+    var file = element.files[0];
+    var fr = new FileReader();           
+    fr.onload = function (event) {
+      var xml = Blockly.Xml.textToDom(event.target.result);
+      demoWorkspace.clear();
+      Blockly.Xml.domToWorkspace(xml, demoWorkspace);
+    };
+    fr.readAsText(file);
+  } catch (e) {
+    alert(e);
+  }	  
+}
+
+
+
+/*
  * Name: settingsMessage
  * Algorithm: Ideally a drop down settings menu
  * Input/Parameters: none
@@ -37,19 +89,8 @@ var onresize = function(e) {
  */
 function settingsMessage()
 {
-
   // initialize function/variables
   document.getElementById("dropdown").classList.toggle("active");
-
-  // check what the current display type for the list is and change it
-
-
-  // call function to show the dropdown content
-  
-  // close the dropdown if the user clicks outside of dropdown
-    // create event listener listening for any action outside of dropdown buttons
-
-  // end function
 }
 
 
@@ -79,7 +120,7 @@ function startButtonLogic()
   // else assume that no blocks have been placed in the workspace
 
     // send alert to window that there should be development before the bot will run
-    alert( "You haven't built blocks yet to run, idots" );
+    alert( "You haven't built blocks yet to run" );
 
   // end function
 }
@@ -121,6 +162,8 @@ buildBlocklyWorkspace();
 document.getElementById( 'settingDropBtn' ).addEventListener( 'click', settingsMessage );
 document.getElementById( 'startbutton' ).addEventListener( 'click', startButtonLogic );
 document.getElementById( 'stopbutton' ).addEventListener( 'click', stopButtonLogic );
+document.getElementById( 'saveBlocks' ).addEventListener( 'click', exportBlocks );
+document.getElementById( 'importFromFile' ).addEventListener( 'click', importBlocksFile );
 
 
 
@@ -129,20 +172,5 @@ window.addEventListener('resize', onresize, false);
 onresize();
 Blockly.svgResize(demoWorkspace);
 
-
-
-// create listener to make dropdown menu for settings disappear.
-window.onclick = function(event){
-  if( !event.target.matches('#settingDropBtn')){
-    var dropdowns = document.getElementsByClassName("settingsDropdown-Content");
-    var i;
-    for( i=0; i<dropdowns.length; i++ ){
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')){
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
 
 })();

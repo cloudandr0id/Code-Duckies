@@ -97,14 +97,3 @@ h1 {
 };
 
 .show {display: block;}
-
-.formArea {
-  padding: 20px;
-}
-.formRow {
-  padding-top: 10px;
-  padding-bottom: 15px;
-}
-.formSubmit {
-  padding-bottom: 20px;
-}
