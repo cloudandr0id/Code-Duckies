@@ -15,7 +15,6 @@ var blocklyDiv = document.getElementById('blocklyDiv');
 demoWorkspace = Blockly.inject(blocklyDiv,
     {media: '/media/',
      toolbox: document.getElementById('toolbox')});
-var onresize = function(e) {
   // Compute the absolute coordinates and dimensions of blocklyArea.
   var element = blocklyArea;
   var x = 0;
@@ -31,7 +30,6 @@ var onresize = function(e) {
   blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
   blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
   Blockly.svgResize(demoWorkspace);
-  };
 }
 
 
@@ -63,19 +61,27 @@ function exportBlocks()
 
 
 
-function importBlocksFile(element) {
+function importBlocksFile(fileList) {
   try {	
-    var file = element.files[0];
-    var fr = new FileReader();           
-    fr.onload = function (event) {
-      var xml = Blockly.Xml.textToDom(event.target.result);
-      demoWorkspace.clear();
-      Blockly.Xml.domToWorkspace(xml, demoWorkspace);
-    };
-    fr.readAsText(file);
+    Blockly.serialization.workspaces.load(fileList);
   } catch (e) {
     alert(e);
   }	  
+}
+
+function previewFile() {
+  const content = document.querySelector('.content');
+  const [file] = document.querySelector('input[type=file]').files;
+  const reader = new FileReader();
+
+  reader.addEventListener("load", () => {
+    // this will then display a text file
+    content.innerText = reader.result;
+  }, false);
+
+  if (file) {
+    reader.readAsText(file);
+  }
 }
 
 
@@ -163,13 +169,11 @@ document.getElementById( 'settingDropBtn' ).addEventListener( 'click', settingsM
 document.getElementById( 'startbutton' ).addEventListener( 'click', startButtonLogic );
 document.getElementById( 'stopbutton' ).addEventListener( 'click', stopButtonLogic );
 document.getElementById( 'saveBlocks' ).addEventListener( 'click', exportBlocks );
-document.getElementById( 'importFromFile' ).addEventListener( 'click', importBlocksFile );
-
+document.getElementById( 'fileSelector' ).addEventListener( 'change', previewFile );
 
 
 // creates listeners to resize the Blockly workspace if the window size changes
-window.addEventListener('resize', onresize, false);
-onresize();
+window.addEventListener('resize', false);
 Blockly.svgResize(demoWorkspace);
 
 
