@@ -16,7 +16,11 @@
     <button id="settingDropBtn">Settings</button>
       <ul id="dropdown">
           <li id="saveBlocks">Save Project</li>
-          <li id="importFromFile">Import Project <input type="file" id="fileSelector"></li>
+          <li id="importProject">Import Project </li>
+            <ul id="fileSelector">
+              <li><input type="file" id="fileName" accept=".txt"></li>
+              <li><button id="importWorkspace">Import from file</button></li>
+            </ul>
           <li><a href="index.html">Reset Connection - For Instructor Only</a></li>
       </ul>
   </div>

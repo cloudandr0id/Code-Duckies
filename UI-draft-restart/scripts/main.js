@@ -5,7 +5,6 @@
   // global variables
 var demoWorkspace;
 
-
   
 // master function to create blockly page
 function buildBlocklyWorkspace()
@@ -15,6 +14,7 @@ var blocklyDiv = document.getElementById('blocklyDiv');
 demoWorkspace = Blockly.inject(blocklyDiv,
     {media: '/media/',
      toolbox: document.getElementById('toolbox')});
+var onresize = function(e) {
   // Compute the absolute coordinates and dimensions of blocklyArea.
   var element = blocklyArea;
   var x = 0;
@@ -30,6 +30,21 @@ demoWorkspace = Blockly.inject(blocklyDiv,
   blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
   blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
   Blockly.svgResize(demoWorkspace);
+  };
+}
+
+
+
+/*
+ * Name: displayFileChoice
+ * Algorithm: toggles active css for linked list to choose a file 
+ * Input/Parameters: none
+ * Output: makes chose file available to user
+ * Notes: none
+ */
+function displayFileChoice()
+{
+  document.getElementById( 'fileSelector' ).classList.toggle( 'active' );
 }
 
 
@@ -61,27 +76,16 @@ function exportBlocks()
 
 
 
-function importBlocksFile(fileList) {
-  try {	
-    Blockly.serialization.workspaces.load(fileList);
-  } catch (e) {
-    alert(e);
-  }	  
-}
-
-function previewFile() {
-  const content = document.querySelector('.content');
-  const [file] = document.querySelector('input[type=file]').files;
-  const reader = new FileReader();
-
-  reader.addEventListener("load", () => {
-    // this will then display a text file
-    content.innerText = reader.result;
-  }, false);
-
-  if (file) {
-    reader.readAsText(file);
-  }
+/*
+ * Name: importBlocksFile()
+ * Algorithm: Takes the file and imports the data inside into a workspace
+ *            Will only do this if there is data in the file
+ * Precondition: buttons for settings and import project have been clicked
+ * Postcondition: Workspace has been reset to what project has been uploaded
+ * Notes: currently only showing an alert.
+ */
+function importBlocksFile() {
+  alert("trying to import block");
 }
 
 
@@ -169,8 +173,8 @@ document.getElementById( 'settingDropBtn' ).addEventListener( 'click', settingsM
 document.getElementById( 'startbutton' ).addEventListener( 'click', startButtonLogic );
 document.getElementById( 'stopbutton' ).addEventListener( 'click', stopButtonLogic );
 document.getElementById( 'saveBlocks' ).addEventListener( 'click', exportBlocks );
-document.getElementById( 'fileSelector' ).addEventListener( 'change', previewFile );
-
+document.getElementById( 'importProject' ).addEventListener( 'click', displayFileChoice );
+document.getElementById( 'importWorkspace' ).addEventListener( 'click', importBlocksFile );
 
 // creates listeners to resize the Blockly workspace if the window size changes
 window.addEventListener('resize', false);

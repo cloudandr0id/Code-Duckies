@@ -108,3 +108,13 @@ h1 {
 .formSubmit {
   padding-bottom: 20px;
 }
+
+#fileSelector {
+  display: none;
+  list-style-type: none;
+}
+
+#fileSelector.active {
+  display: block;
+  list-style-type: none;
+}
