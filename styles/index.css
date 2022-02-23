@@ -1,0 +1,120 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+body {
+  background-color: #fff;
+  font-family: sans-serif;
+  overflow: hidden;
+}
+header {
+  padding: 10px;
+  text-align: center;
+  background: lightblue;
+  font-size: 30px;
+}
+h1 {
+  font-weight: normal;
+  font-size: 140%;
+}
+
+.startStopButtons {
+  text-align: right;
+}
+.settingDropdown {
+  float: left;
+  text-align: left;
+}
+
+#blocklyArea {
+  height: 99%;
+}
+
+.mode-edit,
+.mode-maker,
+.mode-blockly {
+  display: none;
+}
+
+[mode="maker"] .mode-maker,
+[mode="edit"] .mode-edit,
+[mode="blockly"] .mode-blockly {
+  display: block;
+}
+
+#startbutton {
+  background-color: lightgreen;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 12px;
+  font-size: 20px;
+  cursor: pointer;
+}
+#stopbutton {
+  background-color: lightcoral;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 12px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#settingDropBtn {
+  background-color: lightgrey;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 12px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.mdl-button {
+  margin: 1em 0;
+  float: right;
+}
+
+.settingsDropdown {
+  position: relative;
+  display: inline-block;
+}
+
+#dropdown {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 100;
+}
+
+#dropdown.active{
+  display: block;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 100;
+};
+
+.show {display: block;}
+
+.formArea {
+  padding: 20px;
+}
+.formRow {
+  padding-top: 10px;
+  padding-bottom: 15px;
+}
+.formSubmit {
+  padding-bottom: 20px;
+}
+
+#fileSelector {
+  display: none;
+  list-style-type: none;
+}
+
+#fileSelector.active {
+  display: block;
+  list-style-type: none;
+}
