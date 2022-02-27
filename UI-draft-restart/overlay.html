@@ -12,6 +12,7 @@
   <header>
     <h1>Programming Area</h1>
   </header>
+  <!--- Settings menu --->
   <div class="settingDropdown">
     <button id="settingDropBtn">Settings</button>
       <ul id="dropdown">
@@ -24,17 +25,21 @@
           <li><a href="index.html">Reset Connection - For Instructor Only</a></li>
       </ul>
   </div>
+
+  <!--- Buttons for start and stop --->
   <div class="startStopButtons">
     <button id="startbutton">Start</button>
     <button id="stopbutton">Stop</button>
   </div>
 
 
-
+  <!--- Area for blockly workspace --->
   <div id="blocklyDiv" style="height: 100%; width: 100%"></div>
 
 
+  <!--- toolbox --->
   <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+    <!--- basic categories --->
     <category name="Logic" colour="%{BKY_LOGIC_HUE}">
       <block type="controls_if"></block>
       <block type="controls_if">
@@ -123,6 +128,18 @@
     </category>
     <category name="Functions" custom="PROCEDURE" colour="%{BKY_PROCEDURES_HUE}">
     </category>
+    <!--- category for debugging, will not be in final product--->
+    <category name="Text" colour="%{BKY_TEXTS_HUE}">
+      <block type="text_print">
+        <value name="TEXT">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+    </category>
+
+    <!--- duckietown blocks--->
     <sep></sep>
     <category name="Duckietown" colour="172">
       <block type="movebot"></block>

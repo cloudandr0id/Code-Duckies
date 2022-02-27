@@ -121,16 +121,39 @@ function startButtonLogic()
   var tiresPealing = new Audio( 'sounds/Tires.m4a' );
 
   // check that there is blocks in the workspace
-
+  if(demoWorkspace.getAllBlocks(false).length != 0)
+  {
+    alert( "Evaluating code" );
     // play sounds
-    tiresPealing.play();
+    //tiresPealing.play();
 
-    // call functions that translate those blocks. Maybe in DuckBlock.js file?
+    // check for infinite loop
+    window.LoopTrap = 1000;
+    Blockly.JavaScript.INFINITE_LOOP_TRAP =
+        'if (--window.LoopTrap === 0) throw "Infinite loop.";\n';
 
-  // else assume that no blocks have been placed in the workspace
+    // turn workspace into JavaScript
+    var code = Blockly.JavaScript.workspaceToCode(demoWorkspace);
+    Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+
+    // eval code
+    try
+    {
+      eval(code);
+    }
+    catch (e)
+    {
+      alert(MSG['Code is bad'].replace('%1',e));
+    }
+
+  }
+  else
+  {
+    // else assume that no blocks have been placed in the workspace
 
     // send alert to window that there should be development before the bot will run
     alert( "You haven't built blocks yet to run" );
+  }
 
   // end function
 }
