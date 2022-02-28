@@ -85,6 +85,7 @@ h1 {
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 100;
+  font-family: sans-serif;
 }
 
 #dropdown.active{
@@ -117,4 +118,21 @@ h1 {
 #fileSelector.active {
   display: block;
   list-style-type: none;
+}
+
+#importWorkspace {
+  padding: 10px;
+  color: white;
+  background-color: #009578;
+  border: 1px solid #000;
+  border-radius: 5px;
+  cursor: pointer
+}
+
+#importWorkspace.hover {
+  background-color: #00b28f;
+}
+
+#custom-text {
+  color: #aaa;
 }

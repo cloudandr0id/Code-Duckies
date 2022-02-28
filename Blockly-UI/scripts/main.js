@@ -4,6 +4,8 @@
 
   // global variables
 var demoWorkspace;
+const realFileBtn = document.getElementById( "fileName" );
+const customTxt = document.getElementById( "custom-text" );
 
   
 // master function to create blockly page
@@ -37,7 +39,7 @@ var onresize = function(e) {
 
 /*
  * Name: displayFileChoice
- * Algorithm: toggles active css for linked list to choose a file 
+ * Algorithm: toggles active from css for linked list to choose a file 
  * Input/Parameters: none
  * Output: makes chose file available to user
  * Notes: none
@@ -85,7 +87,9 @@ function exportBlocks()
  * Notes: currently only showing an alert.
  */
 function importBlocksFile() {
-  alert("trying to import block");
+  // click on the normal import button.
+  // shows a screen to choose a file.
+  realFileBtn.click();
 }
 
 
@@ -101,6 +105,27 @@ function settingsMessage()
 {
   // initialize function/variables
   document.getElementById("dropdown").classList.toggle("active");
+}
+
+
+
+/*
+ * Name: showFileName
+ * Algorithm: changes the import file name to one that has been chosen
+ * Precondition: Import from file button has been clicked, a file has been chosen
+ * Postcondition: name has changed on the file
+ * Notes: none
+ */
+function showFileName()
+{
+  // check if there is a value in the real file
+  if( realFileBtn.value ) {
+    // temporary string change under the button if there file can be used
+    customTxt.innerHTML = realFileBtn.value;
+  }
+  else{
+    customTxt.innerHTML = "Choose a saved workspace";
+  }
 }
 
 
@@ -198,6 +223,7 @@ document.getElementById( 'stopbutton' ).addEventListener( 'click', stopButtonLog
 document.getElementById( 'saveBlocks' ).addEventListener( 'click', exportBlocks );
 document.getElementById( 'importProject' ).addEventListener( 'click', displayFileChoice );
 document.getElementById( 'importWorkspace' ).addEventListener( 'click', importBlocksFile );
+realFileBtn.addEventListener( "change", showFileName );
 
 // creates listeners to resize the Blockly workspace if the window size changes
 window.addEventListener('resize', false);
