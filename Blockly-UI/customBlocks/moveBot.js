@@ -3,9 +3,9 @@ Blockly.Blocks['movebot'] = {
     this.appendDummyInput()
         .appendField("Power percentage to:")
         .appendField("left wheel")
-        .appendField(new Blockly.FieldNumber(0, 0, 100), "leftWheel")
+        .appendField(new Blockly.FieldNumber(0, -1, 1), "leftWheel")
         .appendField("and right wheel")
-        .appendField(new Blockly.FieldNumber(0, 0, 100), "rightWheel");
+        .appendField(new Blockly.FieldNumber(0, -1, 1), "rightWheel");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(172);
