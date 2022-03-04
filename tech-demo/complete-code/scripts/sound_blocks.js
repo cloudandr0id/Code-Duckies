@@ -54,75 +54,66 @@ Blockly.JavaScript['play_sound'] = function(block) {
 
   var cmdVel = new ROSLIB.Topic({
     ros : ros,
-    name : '/cmd_vel',
-    messageType : 'geometry_msgs/Twist'
+    name : '/pc_to_bot',
+    messageType : 'std_msgs/Float32MultiArray'
   });
 
-  var twist = new ROSLIB.Message({
-    linear : {
-      x : 0.1,
-      y : 0.2,
-      z : 0.3
-    },
-    angular : {
-      x : -0.1,
-      y : -0.2,
-      z : -0.3
-    }
+  var move = new ROSLIB.Message({
+    data : [0, 0]
   });
-  cmdVel.publish(twist);
+  cmdVel.publish(move);
 
   // Subscribing to a Topic
   // ----------------------
 
-  var listener = new ROSLIB.Topic({
-    ros : ros,
-    name : '/listener',
-    messageType : 'std_msgs/String'
-  });
+  // var listener = new ROSLIB.Topic({
+  //   ros : ros,
+  //   name : '/listener',
+  //   messageType : 'std_msgs/String'
+  // });
 
-  listener.subscribe(function(message) {
-    console.log('Received message on ' + listener.name + ': ' + message.data);
-    listener.unsubscribe();
-  });
+  // listener.subscribe(function(message) {
+  //   console.log('Received message on ' + listener.name + ': ' + message.data);
+  //   listener.unsubscribe();
+  // });
 
-  // Calling a service
-  // -----------------
+  // // Calling a service
+  // // -----------------
 
-  var addTwoIntsClient = new ROSLIB.Service({
-    ros : ros,
-    name : '/add_two_ints',
-    serviceType : 'rospy_tutorials/AddTwoInts'
-  });
+  // var addTwoIntsClient = new ROSLIB.Service({
+  //   ros : ros,
+  //   name : '/add_two_ints',
+  //   serviceType : 'rospy_tutorials/AddTwoInts'
+  // });
 
-  var request = new ROSLIB.ServiceRequest({
-    a : 1,
-    b : 2
-  });
+  // var request = new ROSLIB.ServiceRequest({
+  //   a : 1,
+  //   b : 2
+  // });
 
-  addTwoIntsClient.callService(request, function(result) {
-    console.log('Result for service call on '
-      + addTwoIntsClient.name
-      + ': '
-      + result.sum);
-  });
+  // addTwoIntsClient.callService(request, function(result) {
+  //   console.log('Result for service call on '
+  //     + addTwoIntsClient.name
+  //     + ': '
+  //     + result.sum);
+  // });
 
-  // Getting and setting a param value
-  // ---------------------------------
+  // // Getting and setting a param value
+  // // ---------------------------------
 
-  ros.getParams(function(params) {
-    console.log(params);
-  });
+  // ros.getParams(function(params) {
+  //   console.log(params);
+  // });
 
-  var maxVelX = new ROSLIB.Param({
-    ros : ros,
-    name : 'max_vel_y'
-  });
+  // var maxVelX = new ROSLIB.Param({
+  //   ros : ros,
+  //   name : 'max_vel_y'
+  // });
 
-  maxVelX.set(0.8);
-  maxVelX.get(function(value) {
-    console.log('MAX VAL: ' + value);
-  });
+  // maxVelX.set(0.8);
+  // maxVelX.get(function(value) {
+  //   console.log('MAX VAL: ' + value);
+  // });
 
   let value = '\'' + block.getFieldValue('VALUE') + '\'';
   return 'MusicMaker.queueSound(' + value + ');\n';
