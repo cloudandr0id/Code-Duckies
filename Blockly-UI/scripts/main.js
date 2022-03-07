@@ -156,8 +156,13 @@ function showFileName()
 
 
 // Used by blocks
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
 }
 
 
@@ -188,6 +193,9 @@ function startButtonLogic()
     var code = Blockly.JavaScript.workspaceToCode(demoWorkspace);
     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
 
+    // Log the generated code for debugging purposes
+    console.log(code)
+
     // eval code
     try
     {
@@ -195,6 +203,10 @@ function startButtonLogic()
     }
     catch (e)
     {
+      // Log the error for debugging purposes
+      console.log(e);
+      // Make sure we stop the bot before alerting
+      stopButtonLogic();
       alert(e);
     }
 

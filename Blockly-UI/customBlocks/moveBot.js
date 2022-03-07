@@ -17,26 +17,24 @@ Blockly.Blocks['movebot'] = {
 };
 
 Blockly.JavaScript['movebot'] = function(block) {
+  // Get vars
   var number_leftwheel = block.getFieldValue('leftWheel');
   var number_rightwheel = block.getFieldValue('rightWheel');
   var time = block.getFieldValue('time');
-  // print out variables grabbed for debugging
-  // var code = number_leftwheel + ' ' + number_rightwheel + ' ' + time;
-  // window.alert(code)
-  // can add code here to send vars to bot
 
+  // Template code to send to bot
   var code =
-  `(async () => {var wheel_power = new ROSLIB.Message({
+  `(() => {var wheel_power = new ROSLIB.Message({
     data : [` + number_leftwheel  + `,` + number_rightwheel + `]
   });
   cmdVel.publish(wheel_power);
 
-  await sleep(1000 * ` + time +`);
+  sleep(1000 * ` + time +`);
 
   var stop = new ROSLIB.Message({
     data : [0,0]
   });
-  cmdVel.publish(stop);})()`
+  cmdVel.publish(stop);})();\n`
 
   // return the two vars
   return code;
