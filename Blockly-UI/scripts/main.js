@@ -8,6 +8,7 @@ const realFileBtn = document.getElementById( "fileName" );
 const customTxt = document.getElementById( "custom-text" );
 
 
+// Setup ROS stuff
 var ros = new ROSLIB.Ros({
   url : 'ws://localhost:9090'
 });
@@ -166,7 +167,7 @@ function sleep(ms) {
  * Output: Calls functions that run Duckiebots.
  * Notes: currently only shows an alert
  */
-async function startButtonLogic()
+function startButtonLogic()
 {
   // initialize function/variables
   var tiresPealing = new Audio( 'sounds/Tires.m4a' );
@@ -220,7 +221,7 @@ async function startButtonLogic()
  */
 function stopButtonLogic()
 {
-  // Stop the botd
+  // Stop the bot
   var stop = new ROSLIB.Message({
     data : [0, 0]
   });
