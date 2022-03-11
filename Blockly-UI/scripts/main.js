@@ -7,7 +7,34 @@ var demoWorkspace;
 const realFileBtn = document.getElementById( "fileName" );
 const customTxt = document.getElementById( "custom-text" );
 
-  
+
+// Setup ROS stuff
+var ros = new ROSLIB.Ros({
+  url : 'ws://localhost:9090'
+});
+
+ros.on('connection', function() {
+  console.log('Connected to websocket server.');
+});
+
+ros.on('error', function(error) {
+  console.log('Error connecting to websocket server: ', error);
+});
+
+ros.on('close', function() {
+  console.log('Connection to websocket server closed.');
+});
+
+// Publishing a Topic
+// ------------------
+
+var cmdVel = new ROSLIB.Topic({
+  ros : ros,
+  name : '/pc_to_bot',
+  messageType : 'std_msgs/Float32MultiArray'
+});
+
+
 // master function to create blockly page
 function buildBlocklyWorkspace()
 {
@@ -39,7 +66,7 @@ var onresize = function(e) {
 
 /*
  * Name: displayFileChoice
- * Algorithm: toggles active from css for linked list to choose a file 
+ * Algorithm: toggles active from css for linked list to choose a file
  * Input/Parameters: none
  * Output: makes chose file available to user
  * Notes: none
@@ -58,12 +85,11 @@ function displayFileChoice()
  * Output: saves a file if possible
  * Notes: none
  */
-function exportBlocks() 
+function exportBlocks()
 {
   try {
     var xml = Blockly.Xml.workspaceToDom(demoWorkspace);
     var xml_text = Blockly.Xml.domToText(xml);
-	  
     var link = document.createElement('a');
     link.download="project.txt";
     link.href="data:application/octet-stream;utf-8," + encodeURIComponent(xml_text);
@@ -129,6 +155,16 @@ function showFileName()
 }
 
 
+// Used by blocks
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
+
 
 /*
  * Name: startButtonLogic
@@ -139,16 +175,12 @@ function showFileName()
  */
 function startButtonLogic()
 {
-  // placeholder to currently verify that the button works
-  alert( "You clicked start" );
-
   // initialize function/variables
   var tiresPealing = new Audio( 'sounds/Tires.m4a' );
 
   // check that there is blocks in the workspace
   if(demoWorkspace.getAllBlocks(false).length != 0)
   {
-    alert( "Evaluating code" );
     // play sounds
     //tiresPealing.play();
 
@@ -161,6 +193,9 @@ function startButtonLogic()
     var code = Blockly.JavaScript.workspaceToCode(demoWorkspace);
     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
 
+    // Log the generated code for debugging purposes
+    console.log(code)
+
     // eval code
     try
     {
@@ -168,7 +203,11 @@ function startButtonLogic()
     }
     catch (e)
     {
-      alert(MSG['Code is bad'].replace('%1',e));
+      // Log the error for debugging purposes
+      console.log(e);
+      // Make sure we stop the bot before alerting
+      stopButtonLogic();
+      alert(e);
     }
 
   }
@@ -185,7 +224,7 @@ function startButtonLogic()
 
 
 
-/* 
+/*
  * Name: stopButtonLogic
  * Algorithm: calls functions that stop functions of the Duckiebots
  *            either stops signal or sends an interupt stop command
@@ -195,18 +234,11 @@ function startButtonLogic()
  */
 function stopButtonLogic()
 {
-  // placeholder to currently verify that the button works
-  alert( "You clicked stop" );
-
-  // initialize function/variables as needed
-
-  // check for current commands being sent to bot
-
-    // end commands being sent to bot
-
-  // send stop signal
-
-  // end function
+  // Stop the bot
+  var stop = new ROSLIB.Message({
+    data : [0, 0]
+  });
+  cmdVel.publish(stop);
 }
 
 
