@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>Visual Programming for Duckietown Autonomous Robots</title>
   <script src="https://unpkg.com/blockly/blockly.min.js"></script>
-  <script src=customBlocks/moveBot.js></script>
+  <script src=customBlocks/Duckietown.js></script>
   <script src="http://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
   <script src="http://static.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
   <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css">
@@ -144,8 +144,13 @@
 
     <!--- duckietown blocks--->
     <sep></sep>
-    <category name="Duckietown" colour="172">
+    <category name="Duckietown" colour="60">
       <block type="movebot"></block>
+      <block type="moveforward"></block>
+      <block type="movebackward"></block>
+      <block type="turnleft"></block>
+      <block type="turnright"></block>
+      <block type="getdistancedata"></block>
     </category>
   </xml>
 
