@@ -113,9 +113,21 @@ function exportBlocks()
  * Notes: currently only showing an alert.
  */
 function importBlocksFile() {
-  // click on the normal import button.
-  // shows a screen to choose a file.
-  realFileBtn.click();
+  // click import project
+  let xml = prompt("Please enter xml file contents", "Type here")
+  
+  try 
+  {
+    var newWorkspace = Blockly.Xml.textToDom(xml);
+    Blockly.mainWorkspace.clear();
+    Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, newWorkspace);
+  }
+  catch (e)
+  {
+    alert("Invalid xml");
+  }
+  
+
 }
 
 
@@ -134,25 +146,6 @@ function settingsMessage()
 }
 
 
-
-/*
- * Name: showFileName
- * Algorithm: changes the import file name to one that has been chosen
- * Precondition: Import from file button has been clicked, a file has been chosen
- * Postcondition: name has changed on the file
- * Notes: none
- */
-function showFileName()
-{
-  // check if there is a value in the real file
-  if( realFileBtn.value ) {
-    // temporary string change under the button if there file can be used
-    customTxt.innerHTML = realFileBtn.value;
-  }
-  else{
-    customTxt.innerHTML = "Choose a saved workspace";
-  }
-}
 
 
 // Used by blocks
@@ -253,8 +246,7 @@ document.getElementById( 'settingDropBtn' ).addEventListener( 'click', settingsM
 document.getElementById( 'startbutton' ).addEventListener( 'click', startButtonLogic );
 document.getElementById( 'stopbutton' ).addEventListener( 'click', stopButtonLogic );
 document.getElementById( 'saveBlocks' ).addEventListener( 'click', exportBlocks );
-document.getElementById( 'importProject' ).addEventListener( 'click', displayFileChoice );
-document.getElementById( 'importWorkspace' ).addEventListener( 'click', importBlocksFile );
+document.getElementById( 'importProject' ).addEventListener( 'click', importBlocksFile );
 realFileBtn.addEventListener( "change", showFileName );
 
 // creates listeners to resize the Blockly workspace if the window size changes
