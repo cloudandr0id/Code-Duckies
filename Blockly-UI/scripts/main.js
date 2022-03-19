@@ -4,8 +4,6 @@
 
   // global variables
 var demoWorkspace;
-const realFileBtn = document.getElementById( "fileName" );
-const customTxt = document.getElementById( "custom-text" );
 
 
 // Setup ROS stuff
@@ -60,20 +58,6 @@ var onresize = function(e) {
   blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
   Blockly.svgResize(demoWorkspace);
   };
-}
-
-
-
-/*
- * Name: displayFileChoice
- * Algorithm: toggles active from css for linked list to choose a file
- * Input/Parameters: none
- * Output: makes chose file available to user
- * Notes: none
- */
-function displayFileChoice()
-{
-  document.getElementById( 'fileSelector' ).classList.toggle( 'active' );
 }
 
 
@@ -247,7 +231,6 @@ document.getElementById( 'startbutton' ).addEventListener( 'click', startButtonL
 document.getElementById( 'stopbutton' ).addEventListener( 'click', stopButtonLogic );
 document.getElementById( 'saveBlocks' ).addEventListener( 'click', exportBlocks );
 document.getElementById( 'importProject' ).addEventListener( 'click', importBlocksFile );
-realFileBtn.addEventListener( "change", showFileName );
 
 // creates listeners to resize the Blockly workspace if the window size changes
 window.addEventListener('resize', false);
