@@ -35,7 +35,7 @@ Blockly.Blocks['movebot'] = {
     var stop = new ROSLIB.Message({
       data : [0,0]
     });
-    cmdVel.publish(stop);})();\n`
+    cmdVel.publish(stop);})();\n`;
   
     // return the two vars
     return code;
@@ -62,7 +62,20 @@ Blockly.Blocks['moveforward'] = {
     var number_power = block.getFieldValue('power');
     var number_time = block.getFieldValue('time');
     // TODO: Assemble JavaScript into code variable.
-    var code = '\n';
+    var code = 
+    `(() => {var wheel_power = new ROSLIB.Message({
+      data : [` + number_power  + `,` + number_power + `]
+    });
+    cmdVel.publish(number_power);
+  
+    sleep(1000 * ` + number_time +`);
+  
+    var stop = new ROSLIB.Message({
+      data : [0,0]
+    });
+    cmdVel.publish(stop);})();\n`;
+  
+    // return the two vars
     return code;
   };
 
@@ -87,7 +100,20 @@ Blockly.JavaScript['movebackward'] = function(block) {
   var number_power = block.getFieldValue('power');
   var number_time = block.getFieldValue('time');
   // TODO: Assemble JavaScript into code variable.
-  var code = '\n';
+  var code = 
+  `(() => {var wheel_power = new ROSLIB.Message({
+      data : [` + (0 - number_power)  + `,` + (0 - number_power) + `]
+    });
+    cmdVel.publish(wheel_power);
+  
+    sleep(1000 * ` + number_time +`);
+  
+    var stop = new ROSLIB.Message({
+      data : [0,0]
+    });
+    cmdVel.publish(stop);})();\n`;
+  
+    // return the two vars
   return code;
 };
 
@@ -112,7 +138,20 @@ Blockly.Blocks['turnleft'] = {
     var number_power = block.getFieldValue('power');
     var number_time = block.getFieldValue('time');
     // TODO: Assemble JavaScript into code variable.
-    var code = '\n';
+    var code =
+    `(() => {var wheel_power = new ROSLIB.Message({
+      data : [` + (0 - number_power)  + `,` + number_power + `]
+    });
+    cmdVel.publish(wheel_power);
+  
+    sleep(1000 * ` + number_time +`);
+  
+    var stop = new ROSLIB.Message({
+      data : [0,0]
+    });
+    cmdVel.publish(stop);})();\n`;
+  
+    // return the two vars
     return code;
   };
 
@@ -137,7 +176,20 @@ Blockly.Blocks['turnright'] = {
     var number_power = block.getFieldValue('power');
     var number_time = block.getFieldValue('time');
     // TODO: Assemble JavaScript into code variable.
-    var code = '\n';
+    var code = 
+    `(() => {var wheel_power = new ROSLIB.Message({
+      data : [` + number_power  + `,` + (0 - number_power) + `]
+    });
+    cmdVel.publish(wheel_power);
+  
+    sleep(1000 * ` + number_time +`);
+  
+    var stop = new ROSLIB.Message({
+      data : [0,0]
+    });
+    cmdVel.publish(stop);})();\n`;
+  
+    // return the two vars
     return code;
   };
 
