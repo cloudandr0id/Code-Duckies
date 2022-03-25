@@ -28,8 +28,8 @@ ros.on('close', function() {
 
 var cmdVel = new ROSLIB.Topic({
   ros : ros,
-  name : '/pc_to_bot',
-  messageType : 'std_msgs/Float32MultiArray'
+  name : '/Rogelio/wheels_driver_node/wheels_cmd',
+  messageType : 'duckietown_msgs/WheelsCmdStamped'
 });
 
 
@@ -211,8 +211,16 @@ function startButtonLogic()
 function stopButtonLogic()
 {
   // Stop the bot
-  var stop = new ROSLIB.Message({
-    data : [0, 0]
+  var stop = new ROSLIB.Message(
+  {
+    header : {
+      stamp : {
+        sec : 0,
+        nanosec : 0
+      }
+    },
+    vel_left : 0,
+    vel_right : 0
   });
   cmdVel.publish(stop);
 }

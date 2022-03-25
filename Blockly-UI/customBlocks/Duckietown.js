@@ -25,14 +25,24 @@ Blockly.Blocks['movebot'] = {
 
     // Template code to send to bot
     var code =
-    `(() => {var wheel_power = new ROSLIB.Message({
-      data : [` + number_leftwheel  + `,` + number_rightwheel + `]
-    });
-    cmdVel.publish(wheel_power);
+    `(() =>
+     {
+        var wheel_power = new ROSLIB.Message({
+          header : {
+            stamp : {
+              sec : 0,
+              nanosec : 0
+            }
+          },
+          vel_left : ` + number_leftwheel + `,
+          vel_right : ` + number_rightwheel + `
+        });
+      cmdVel.publish(wheel_power);
 
-    sleep(1000 * ` + time +`);
+      sleep(1000 * ` + time +`);
 
-    stopButtonLogic()})();\n`;
+      stopButtonLogic()
+    })();\n`;
 
     // return the two vars
     return code;
