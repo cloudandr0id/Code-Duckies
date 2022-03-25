@@ -8,7 +8,7 @@ var demoWorkspace;
 
 // Setup ROS stuff
 var ros = new ROSLIB.Ros({
-  url : 'ws://localhost:9090'
+  url : 'ws://192.168.62.214:9001'
 });
 
 ros.on('connection', function() {
@@ -28,8 +28,8 @@ ros.on('close', function() {
 
 var cmdVel = new ROSLIB.Topic({
   ros : ros,
-  name : '/pc_to_bot',
-  messageType : 'std_msgs/Float32MultiArray'
+  name : '/Rogelio/wheels_driver_node/wheels_cmd',
+  messageType : 'duckietown_msgs/WheelsCmdStamped'
 });
 
 
@@ -99,8 +99,8 @@ function exportBlocks()
 function importBlocksFile() {
   // click import project
   let xml = prompt("Please enter xml file contents", "Type here")
-  
-  try 
+
+  try
   {
     var newWorkspace = Blockly.Xml.textToDom(xml);
     Blockly.mainWorkspace.clear();
@@ -110,7 +110,7 @@ function importBlocksFile() {
   {
     alert("Invalid xml");
   }
-  
+
 
 }
 
@@ -133,13 +133,12 @@ function settingsMessage()
 
 
 // Used by blocks
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
+function sleep(milliseconds)
+{
+    var date = new Date();
+    var curDate = null;
+    do { curDate = new Date(); }
+    while(curDate-date < milliseconds);
 }
 
 
@@ -212,8 +211,16 @@ function startButtonLogic()
 function stopButtonLogic()
 {
   // Stop the bot
-  var stop = new ROSLIB.Message({
-    data : [0, 0]
+  var stop = new ROSLIB.Message(
+  {
+    header : {
+      stamp : {
+        sec : 0,
+        nanosec : 0
+      }
+    },
+    vel_left : 0,
+    vel_right : 0
   });
   cmdVel.publish(stop);
 }
