@@ -86,35 +86,66 @@ function exportBlocks()
   }
 }
 
-
+/*
+ * Name: getFile()
+ * Algorithm: allows user to select a file
+ * Precondition: buttons for import project has been clicked
+ * Postcondition: User will be able to select file they wish to use
+ */
+function getFile() {
+  // get the file
+  document.getElementById("fileName").click()
+}
 
 /*
  * Name: importBlocksFile()
  * Algorithm: Takes the file and imports the data inside into a workspace
  *            Will only do this if there is data in the file
- * Precondition: buttons for settings and import project have been clicked
+ * Precondition: buttons for import project has been clicked
  * Postcondition: Workspace has been reset to what project has been uploaded
- * Notes: currently only showing an alert.
  */
 function importBlocksFile() {
-  // click import project
-  let xml = prompt("Please enter xml file contents", "Type here")
+  
+  // file is selected, get it
+  var file = document.getElementById("fileName").files[0];
+  var xml;
 
-  try
+  // read file if not empty
+  if (file) 
   {
-    var newWorkspace = Blockly.Xml.textToDom(xml);
-    Blockly.mainWorkspace.clear();
-    Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, newWorkspace);
-  }
-  catch (e)
-  {
-    alert("Invalid xml");
-  }
+    // create a new file reader
+    var reader = new FileReader();
 
+    // read the file as text
+    reader.readAsText(file, 'utf-8');
 
+    reader.onload = function (reading) {
+      // put the result to a variable
+      xml = reading.target.result;
+
+      // log contents
+      console.log(xml)
+      try
+      {
+        // create new workspace
+        var newWorkspace = Blockly.Xml.textToDom(xml);
+
+        // clear existing workspace
+        Blockly.mainWorkspace.clear();
+
+        // set new workspace as current one
+        Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, newWorkspace);
+      }
+      catch (e)
+      {
+        alert("Invalid xml");
+      }
+    }
+    reader.onerror = function (err) {
+      console.log("error reading file");
+    }
+  }
 }
-
-
 
 /*
  * Name: settingsMessage
@@ -237,8 +268,8 @@ document.getElementById( 'settingDropBtn' ).addEventListener( 'click', settingsM
 document.getElementById( 'startbutton' ).addEventListener( 'click', startButtonLogic );
 document.getElementById( 'stopbutton' ).addEventListener( 'click', stopButtonLogic );
 document.getElementById( 'saveBlocks' ).addEventListener( 'click', exportBlocks );
-document.getElementById( 'importProject' ).addEventListener( 'click', importBlocksFile );
-
+document.getElementById( 'importProject' ).addEventListener( 'click', getFile );
+document.getElementById( 'fileName' ).addEventListener( 'change', importBlocksFile );
 // creates listeners to resize the Blockly workspace if the window size changes
 window.addEventListener('resize', false);
 Blockly.svgResize(demoWorkspace);
