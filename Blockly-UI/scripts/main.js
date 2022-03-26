@@ -5,8 +5,7 @@
   // global variables
 var demoWorkspace;
 
-
-// Setup ROS stuff
+// Setup ROS
 var ros = new ROSLIB.Ros({
   url : 'ws://192.168.62.214:9001'
 });
@@ -237,7 +236,7 @@ function startButtonLogic()
  *            either stops signal or sends an interupt stop command
  * Input/Parameters: none
  * Output: calls functions to stop Duckiebot
- * Notes: currently only shows an alert
+ * Notes: none
  */
 function stopButtonLogic()
 {
@@ -263,7 +262,7 @@ buildBlocklyWorkspace();
 
 
 
-// create aditional listener buttons for settings, start and stop
+// create aditional listener buttons
 document.getElementById( 'settingDropBtn' ).addEventListener( 'click', settingsMessage );
 document.getElementById( 'startbutton' ).addEventListener( 'click', startButtonLogic );
 document.getElementById( 'stopbutton' ).addEventListener( 'click', stopButtonLogic );
