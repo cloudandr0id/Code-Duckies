@@ -4,10 +4,16 @@
 
   // global variables
 var demoWorkspace;
+var robotName = localStorage.getItem("robotName");
+var port = localStorage.getItem("port");
 
-// Setup ROS
+console.log(robotName);
+console.log(port);
+
+// Setup ROS stuff
+// old ip: 192.168.62.214
 var ros = new ROSLIB.Ros({
-  url : 'ws://192.168.62.214:9001'
+  url : 'ws://' + robotName + ":" + port
 });
 
 ros.on('connection', function() {
@@ -236,7 +242,7 @@ function startButtonLogic()
  *            either stops signal or sends an interupt stop command
  * Input/Parameters: none
  * Output: calls functions to stop Duckiebot
- * Notes: none
+ * Notes: currently only shows an alert
  */
 function stopButtonLogic()
 {
@@ -255,14 +261,12 @@ function stopButtonLogic()
   cmdVel.publish(stop);
 }
 
-
-
 // run the main executables to build blockly workspace
 buildBlocklyWorkspace();
 
 
 
-// create aditional listener buttons
+// create aditional listener buttons for settings, start and stop
 document.getElementById( 'settingDropBtn' ).addEventListener( 'click', settingsMessage );
 document.getElementById( 'startbutton' ).addEventListener( 'click', startButtonLogic );
 document.getElementById( 'stopbutton' ).addEventListener( 'click', stopButtonLogic );

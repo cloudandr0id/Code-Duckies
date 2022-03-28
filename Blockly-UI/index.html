@@ -13,21 +13,33 @@
   
   <div class ="formArea">
     <p style="font-size: 18px;"><strong>Insert information to connect to duckiebot</strong></p>
-    <form method="POST" action="overlay.html">
+    <form id="infoForDuck" method="POST" action="overlay.html">
       <div class="formRow">
-        <label for="ipAddress">IP Address:</label>
-        <p><input type="text" id="ipAddress" name="ipAddress"></p>
+        <label for="robotName">Robot name:</label>
+        <p><input type="text" id="robotName" name="robotName"></p>
       </div>
       <div class="formRow">
-        <label for="duckiebotName">Duckiebot Name:</label>
-        <p><input type="text" id="duckiebotName" name="duckiebotName"></p>
+        <label for="port">Port:</label>
+        <p><input type="text" id="port" name="port" value="9001"> *Do not change if you don't know*</p>
       </div>
       <div class="formSubmit">
         <p>Press duck to continue</p>
-        <button id="submit"><img src="pictures/Duck.png" height="35" width="35" /></button>
+        <button id="submit" onclick="dealWForm()"><img src="pictures/Duck.png" height="35" width="35" /></button>
       </div>
       
     </form>
   </div>
+
+  <!-- Script to deal with the form and store the data inside to local storage so the next page can access it -->
+  <script>
+    function dealWForm()
+    {
+      var robotName = document.getElementById("robotName").value;
+      var port = document.getElementById("port").value;
+
+      localStorage.setItem('robotName', robotName);
+      localStorage.setItem('port', port);
+    }
+  </script>
 </body>
 </html>
