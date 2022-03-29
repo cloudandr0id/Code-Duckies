@@ -216,6 +216,8 @@ function startButtonLogic()
   {
     // play sounds
     //tiresPealing.play();
+    // Stop prior program before starting this one
+    stopButtonLogic();
 
     // check for infinite loop
     window.LoopTrap = 1000;
@@ -227,7 +229,13 @@ function startButtonLogic()
     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
 
     // Wrap the returned code in boilerplate
-    code = "(async () => {var myIdx = " + currentIdx + "\n" + code + "\nstopButtonLogic(); })();";
+    code = "(async () => {var myIdx = " + currentIdx + "\n"
+     + code + "\n" +
+    `if (!isCanceled[myIdx])
+    {
+      stopButtonLogic();
+    }
+    })();`;
 
     // Log the generated code for debugging purposes
     console.log(code)
