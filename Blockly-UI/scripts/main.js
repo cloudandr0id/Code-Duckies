@@ -179,7 +179,8 @@ function sleep(milliseconds)
 }
 
 // Keep track of whether a given program was stopped or not, can keep track of
-// last HISTORY_SIZE executions
+// last HISTORY_SIZE executions. 100 should be more than enough for the most
+// part.
 const HISTORY_SIZE = 100;
 
 var currentIdx = 0;
@@ -209,8 +210,6 @@ function startButtonLogic()
 {
   // initialize function/variables
   var tiresPealing = new Audio( 'sounds/Tires.m4a' );
-  // Make sure to stop the current program before attempting to execute this one
-  stopButtonLogic();
 
   // check that there is blocks in the workspace
   if(demoWorkspace.getAllBlocks(false).length != 0)
@@ -236,6 +235,7 @@ function startButtonLogic()
     // eval code
     try
     {
+      isCanceled[currentIdx] = false;
       eval(code);
     }
     catch (e)
