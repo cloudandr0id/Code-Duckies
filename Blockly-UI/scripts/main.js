@@ -178,6 +178,25 @@ function sleep(milliseconds)
     while(curDate - date < milliseconds);
 }
 
+// Keep track of whether a given program was stopped or not, can keep track of
+// last HISTORY_SIZE executions
+const HISTORY_SIZE = 100;
+
+var currentIdx = 0;
+var isCanceled = Array.apply(false, Array(HISTORY_SIZE)).map(function () { return false; });
+
+function setCanceled()
+{
+  isCanceled[currentIdx] = true;
+  currentIdx++;
+
+  if (currentIdx == HISTORY_SIZE)
+  {
+    currentIdx = 0;
+  }
+}
+// This is a lil hacky, but it gets the job done quick
+
 
 /*
  * Name: startButtonLogic
@@ -190,6 +209,8 @@ function startButtonLogic()
 {
   // initialize function/variables
   var tiresPealing = new Audio( 'sounds/Tires.m4a' );
+  // Make sure to stop the current program before attempting to execute this one
+  stopButtonLogic();
 
   // check that there is blocks in the workspace
   if(demoWorkspace.getAllBlocks(false).length != 0)
@@ -206,6 +227,9 @@ function startButtonLogic()
     var code = Blockly.JavaScript.workspaceToCode(demoWorkspace);
     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
 
+    // Wrap the returned code in boilerplate
+    code = "(async () => {var myIdx = " + currentIdx + "\n" + code + "\nstopButtonLogic(); })();";
+
     // Log the generated code for debugging purposes
     console.log(code)
 
@@ -218,7 +242,7 @@ function startButtonLogic()
     {
       // Log the error for debugging purposes
       console.log(e);
-      // Make sure we stop the bot before alerting
+      // Make sure we stop the bot before alerting just in case
       stopButtonLogic();
       alert(e);
     }
@@ -259,6 +283,9 @@ function stopButtonLogic()
     vel_left : 0,
     vel_right : 0
   });
+
+  setCanceled();
+
   cmdVel.publish(stop);
 }
 
