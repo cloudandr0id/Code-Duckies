@@ -25,7 +25,7 @@ Blockly.Blocks['movebot'] = {
 
     // Template code to send to bot
     var code =
-    `(() =>
+    `(async () =>
      {
         var wheel_power = new ROSLIB.Message({
           header : {
@@ -39,7 +39,7 @@ Blockly.Blocks['movebot'] = {
         });
       cmdVel.publish(wheel_power);
 
-      sleep(1000 * ` + time +`);
+      await new Promise(r => setTimeout(r, 1000 * ` + time + `));
 
       stopButtonLogic()
     })();\n`;

@@ -110,13 +110,13 @@ function getFile() {
  * Postcondition: Workspace has been reset to what project has been uploaded
  */
 function importBlocksFile() {
-  
+
   // file is selected, get it
   var file = document.getElementById("fileName").files[0];
   var xml;
 
   // read file if not empty
-  if (file) 
+  if (file)
   {
     // create a new file reader
     var reader = new FileReader();
@@ -166,15 +166,16 @@ function settingsMessage()
 }
 
 
-
-
 // Used by blocks
 function sleep(milliseconds)
 {
     var date = new Date();
     var curDate = null;
-    do { curDate = new Date(); }
-    while(curDate-date < milliseconds);
+    do
+    {
+      curDate = new Date();
+    }
+    while(curDate - date < milliseconds);
 }
 
 
