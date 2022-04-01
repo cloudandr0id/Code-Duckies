@@ -297,6 +297,13 @@ function stopButtonLogic()
   cmdVel.publish(stop);
 }
 
+// when button clicked, simply clear blockly workspace
+function newProjectLogic ()
+{
+  // clear existing workspace
+  Blockly.mainWorkspace.clear();
+}
+
 // run the main executables to build blockly workspace
 buildBlocklyWorkspace();
 
@@ -308,6 +315,7 @@ document.getElementById( 'startbutton' ).addEventListener( 'click', startButtonL
 document.getElementById( 'stopbutton' ).addEventListener( 'click', stopButtonLogic );
 document.getElementById( 'saveBlocks' ).addEventListener( 'click', exportBlocks );
 document.getElementById( 'importProject' ).addEventListener( 'click', getFile );
+document.getElementById( 'newProject' ).addEventListener( 'click', newProjectLogic );
 document.getElementById( 'fileName' ).addEventListener( 'change', importBlocksFile );
 // creates listeners to resize the Blockly workspace if the window size changes
 window.addEventListener('resize', false);
