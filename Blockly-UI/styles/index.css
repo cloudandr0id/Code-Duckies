@@ -10,16 +10,23 @@ body {
   overflow: hidden;
 }
 
-header {
+.pageBar {
   padding: 10px;
-  text-align: center;
-  background: lightblue;
-  font-size: 30px;
+  text-align: left;
+  background: rgb(173, 219, 235);
+  font-size: 25px;
 }
 
-h1 {
-  font-weight: normal;
-  font-size: 140%;
+.logo {
+  color: white;
+  font-size: 30px;
+  padding-left: 10px;
+}
+
+.title {
+  font-size: 30px;
+  padding-left: 30px;
+  color: rgb(3, 41, 54);
 }
 
 
@@ -142,7 +149,7 @@ h1 {
 .show {display: block;}
 
 .formArea {
-  padding: 20px;
+  padding: 30px;
 }
 
 .formRow {
