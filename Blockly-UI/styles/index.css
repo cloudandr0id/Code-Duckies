@@ -71,7 +71,7 @@ body {
   margin: 5px;
   padding: 10px;
   color: white;
-  background-color: #009578;
+  background-color: #007595;
   border: 1px solid #000;
   border-radius: 5px;
   cursor: pointer;
@@ -83,7 +83,7 @@ body {
 }
 
 #resetConnection {
-  background-color: lightcoral;
+  background-color: darkred;
 }
 
 
