@@ -90,10 +90,11 @@ body {
 
 /* Buttons for start and stop */
 .startStopButtons {
+  display: none;
   text-align: right;
 }
 
-#stopbutton {
+#stopbutton.active {
   background-color: lightcoral;
   text-align: center;
   vertical-align: middle;
@@ -103,7 +104,7 @@ body {
   margin: 5px;
 }
 
-#startbutton {
+#startbutton.active {
   background-color: lightgreen;
   text-align: center;
   vertical-align: middle;
