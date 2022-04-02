@@ -17,12 +17,13 @@
   <!--- Settings menu --->
   <div class="settingDropdown">
     <button id="settingDropBtn">Menu</button>
-      <div id="dropdown">
-          <button id="saveBlocks" class="settingsButton">Save Project</button>
-          <button id="importProject" class="settingsButton">Load Project</button>
-          <button id="newProject" class="settingsButton">New Project</button>
-          <button id="resetConnection" class="settingsButton" onclick="location.href='index.html'">Reset Connection<br>(For Instructor Only)</a>
-      </div>
+    <div id="dropdown">
+        <button id="saveBlocks" class="settingsButton">Save Project</button>
+        <button id="importProject" class="settingsButton">Load Project</button>
+        <button id="newProject" class="settingsButton">New Project</button>
+        <input type="file" id="fileName" name="fileName" hidden="hidden">
+        <button id="resetConnection" class="settingsButton" onclick="location.href='index.html'">Reset Connection<br>(For Instructor Only)</a>
+    </div>
   </div>
 
   <!--- Buttons for start and stop --->

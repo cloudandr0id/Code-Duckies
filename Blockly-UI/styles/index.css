@@ -32,11 +32,8 @@ body {
 
 
 /* Settings Menu */
-.settingDropdown {
-  float: left;
-  text-align: left;
-  margin: 5px;
-  position: relative;
+.settingDropdown{
+  padding: 0;
 }
 
 #settingDropBtn {
@@ -48,12 +45,34 @@ body {
   cursor: pointer;
 }
 
+.settingDropdown {
+  float: left;
+  text-align: left;
+  margin: 5px;
+  position: relative;
+  display: block;
+}
+
+.settingDropdown:hover #dropdown{
+  display: block;
+}
+
 #dropdown {
+  position: absolute;
+  font-family: sans-serif;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 100;
+  padding: 10px;
+  color: lightgrey;
+  background-color: lightgrey;
+  border: 1px solid #000;
+  border-radius: 5px;
   display: none;
 }
 
-#dropdown.active{
-  display: inline-block;
+#dropdown #settingsButton {
+  display: block;
   position: absolute;
   font-family: sans-serif;
   margin: 5px;
@@ -76,9 +95,10 @@ body {
   border-radius: 5px;
   cursor: pointer;
   width: 95%;
+  display: block;
 }
 
-.settingsButton.hover {
+.settingsButton:hover {
   background-color: #00b28f;
 }
 
