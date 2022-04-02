@@ -152,18 +152,6 @@ function importBlocksFile() {
   }
 }
 
-/*
- * Name: settingsMessage
- * Algorithm: Ideally a drop down settings menu
- * Input/Parameters: none
- * Output: drops down a menu
- * Notes: currently only shows an alert
- */
-function settingsMessage()
-{
-  // initialize function/variables
-  document.getElementById("dropdown").classList.toggle("active");
-}
 
 
 // Used by blocks
@@ -334,7 +322,6 @@ buildBlocklyWorkspace();
 
 
 // create aditional listener buttons for settings, start and stop
-document.getElementById( 'settingDropBtn' ).addEventListener( 'click', settingsMessage );
 document.getElementById( 'startbutton' ).addEventListener( 'click', startButtonLogic );
 // hide stop button until start is clicked
 document.getElementById("stopbutton").classList.toggle("active");
