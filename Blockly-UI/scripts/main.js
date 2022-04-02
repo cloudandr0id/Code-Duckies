@@ -214,10 +214,14 @@ function startButtonLogic()
   // check that there is blocks in the workspace
   if(demoWorkspace.getAllBlocks(false).length != 0)
   {
+    // show stop button and hide start button
+    document.getElementById("stopbutton").classList.toggle("active");
+    document.getElementById("startbutton").classList.toggle("active");
+    
     // play sounds
     //tiresPealing.play();
     // Stop prior program before starting this one
-    stopButtonLogic();
+    stopRobotLogic();
 
     // check for infinite loop
     window.LoopTrap = 1000;
@@ -233,7 +237,7 @@ function startButtonLogic()
      + code + "\n" +
     `if (!isCanceled[myIdx])
     {
-      stopButtonLogic();
+      stopRobotLogic();
     }
     })();`;
 
@@ -251,7 +255,7 @@ function startButtonLogic()
       // Log the error for debugging purposes
       console.log(e);
       // Make sure we stop the bot before alerting just in case
-      stopButtonLogic();
+      stopRobotLogic();
       alert(e);
     }
 
@@ -271,13 +275,33 @@ function startButtonLogic()
 
 /*
  * Name: stopButtonLogic
+ * Algorithm: calls the function that stops the robot
+ *            changes the stop button back to start
+ * Input/Parameters: none
+ * Output: stops robot and changes visible buttons
+ * Notes: none
+ */
+function stopButtonLogic()
+{
+  // stop the robot
+  stopRobotLogic()
+
+  // show start button and hide stop button
+  document.getElementById("startbutton").classList.toggle("active");
+  document.getElementById("stopbutton").classList.toggle("active");
+}
+
+
+
+/*
+ * Name: stopRobotLogic
  * Algorithm: calls functions that stop functions of the Duckiebots
  *            either stops signal or sends an interupt stop command
  * Input/Parameters: none
  * Output: calls functions to stop Duckiebot
  * Notes: currently only shows an alert
  */
-function stopButtonLogic()
+function stopRobotLogic()
 {
   // Stop the bot
   var stop = new ROSLIB.Message(
@@ -312,6 +336,8 @@ buildBlocklyWorkspace();
 // create aditional listener buttons for settings, start and stop
 document.getElementById( 'settingDropBtn' ).addEventListener( 'click', settingsMessage );
 document.getElementById( 'startbutton' ).addEventListener( 'click', startButtonLogic );
+// hide stop button until start is clicked
+document.getElementById("stopbutton").classList.toggle("active");
 document.getElementById( 'stopbutton' ).addEventListener( 'click', stopButtonLogic );
 document.getElementById( 'saveBlocks' ).addEventListener( 'click', exportBlocks );
 document.getElementById( 'importProject' ).addEventListener( 'click', getFile );
