@@ -205,11 +205,9 @@ function startButtonLogic()
     // show stop button and hide start button
     document.getElementById("stopbutton").classList.toggle("active");
     document.getElementById("startbutton").classList.toggle("active");
-    
+
     // play sounds
     //tiresPealing.play();
-    // Stop prior program before starting this one
-    stopRobotLogic();
 
     // check for infinite loop
     window.LoopTrap = 1000;
