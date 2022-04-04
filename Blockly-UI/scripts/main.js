@@ -1,10 +1,11 @@
 (function() {
 
-
-
-  // global variables
+// global variables
 var demoWorkspace;
 var robotName = localStorage.getItem("robotName");
+// We need this stripped name to get the topics on the bot
+// NOTE: might be a better way to get bot name
+var strippedRobotName = robotName.replace('.local', '');
 var port = localStorage.getItem("port");
 
 console.log(robotName);
@@ -33,7 +34,7 @@ ros.on('close', function() {
 
 var cmdVel = new ROSLIB.Topic({
   ros : ros,
-  name : '/Rogelio/wheels_driver_node/wheels_cmd',
+  name : '/' + strippedRobotName +'/wheels_driver_node/wheels_cmd',
   messageType : 'duckietown_msgs/WheelsCmdStamped'
 });
 
@@ -224,8 +225,6 @@ function startButtonLogic()
     `if (!isCanceled[myIdx])
     {
       stopRobotLogic();
-      document.getElementById("stopbutton").classList.toggle("active");
-      document.getElementById("startbutton").classList.toggle("active");
     }
 
 
@@ -309,6 +308,9 @@ function stopRobotLogic()
   setCanceled();
 
   cmdVel.publish(stop);
+
+  document.getElementById("stopbutton").classList.toggle("active");
+  document.getElementById("startbutton").classList.toggle("active");
 }
 
 // when button clicked, simply clear blockly workspace
