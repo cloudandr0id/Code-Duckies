@@ -224,7 +224,11 @@ function startButtonLogic()
     `if (!isCanceled[myIdx])
     {
       stopRobotLogic();
+      document.getElementById("stopbutton").classList.toggle("active");
+      document.getElementById("startbutton").classList.toggle("active");
     }
+
+
     })();`;
 
     // Log the generated code for debugging purposes
