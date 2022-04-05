@@ -202,19 +202,41 @@ Blockly.Blocks['turnright'] = {
   };
 
 ///////// DISTANCE DATA ///////////////////////////////////////////////////
+// Only use this block once per program
 Blockly.Blocks['getdistancedata'] = {
     init: function() {
       this.appendDummyInput()
-          .appendField("get distance data");
-      this.setOutput(true, null);
+          .appendField("Store distance data in: ")
+          .appendField(new Blockly.FieldTextInput(''), 'distanceVar');
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
       this.setColour(60);
    this.setTooltip("");
    this.setHelpUrl("");
     }
   };
   Blockly.JavaScript['getdistancedata'] = function(block) {
-    // TODO: Assemble JavaScript into code variable.
-    var code = '\n';
+    // Subscribe to tof sensor
+    // Get the name of the blockly variable we are storing our distance in
+    var distance_var = block.getFieldValue('distanceVar');
+
+
+    var code =
+    `
+    var distance = new ROSLIB.Topic({
+      ros : ros,
+      name : "/" + strippedRobotName + "/front_center_tof_driver_node/range",
+      messageType : "sensor_msgs/Range"
+    });
+    distance.subscribe(function(message) {
+      `+ distance_var + ` = message.range;
+      console.log(` + distance_var + `);
+    });
+
+    // Delay to make sure we are actually getting distance data before we enter
+    // the loop
+    await new Promise(r => setTimeout(r, 100));
+    `;
     // TODO: Change ORDER_NONE to the correct strength.
-    return [code, Blockly.JavaScript.ORDER_NONE];
+    return code;
   };

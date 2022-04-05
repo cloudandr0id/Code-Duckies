@@ -220,14 +220,18 @@ function startButtonLogic()
     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
 
     // Wrap the returned code in boilerplate
-    code = "(async () => {var myIdx = " + currentIdx + "\n"
+    code = "(async () => {\nvar myIdx = " + currentIdx + "\n"
      + code + "\n" +
-    `if (!isCanceled[myIdx])
+    `
+    if (!isCanceled[myIdx])
     {
+      // If we subscribed to distance then unsubscribe
+      if (typeof distance !== 'undefined')
+      {
+        distance.unsubscribe();
+      }
       stopRobotLogic();
     }
-
-
     })();`;
 
     // Log the generated code for debugging purposes
