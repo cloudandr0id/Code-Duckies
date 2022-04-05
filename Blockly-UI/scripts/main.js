@@ -29,15 +29,19 @@ ros.on('close', function() {
   console.log('Connection to websocket server closed.');
 });
 
-// Publishing a Topic
-// ------------------
-
+// Publish wheel commands here
 var cmdVel = new ROSLIB.Topic({
   ros : ros,
   name : '/' + strippedRobotName +'/wheels_driver_node/wheels_cmd',
   messageType : 'duckietown_msgs/WheelsCmdStamped'
 });
 
+// Subscribe to TOF sensor here
+TOF_SENSOR = new ROSLIB.Topic({
+  ros : ros,
+  name : "/" + strippedRobotName + "/front_center_tof_driver_node/range",
+  messageType : "sensor_msgs/Range"
+});
 
 // master function to create blockly page
 function buildBlocklyWorkspace()
@@ -154,19 +158,6 @@ function importBlocksFile() {
 }
 
 
-
-// Used by blocks
-function sleep(milliseconds)
-{
-    var date = new Date();
-    var curDate = null;
-    do
-    {
-      curDate = new Date();
-    }
-    while(curDate - date < milliseconds);
-}
-
 // Keep track of whether a given program was stopped or not, can keep track of
 // last HISTORY_SIZE executions. 100 should be more than enough for the most
 // part.
@@ -225,12 +216,7 @@ function startButtonLogic()
     `
     if (!isCanceled[myIdx])
     {
-      // If we subscribed to distance then unsubscribe
-      if (typeof distance !== 'undefined')
-      {
-        distance.unsubscribe();
-      }
-      stopRobotLogic();
+      stopButtonLogic();
     }
     })();`;
 
@@ -248,7 +234,7 @@ function startButtonLogic()
       // Log the error for debugging purposes
       console.log(e);
       // Make sure we stop the bot before alerting just in case
-      stopRobotLogic();
+      stopBotLogic();
       alert(e);
     }
 
@@ -256,6 +242,8 @@ function startButtonLogic()
   else
   {
     // else assume that no blocks have been placed in the workspace
+    // Also stop bot just in case
+    stopBotLogic();
 
     // send alert to window that there should be development before the bot will run
     alert( "You haven't built blocks yet to run" );
@@ -265,37 +253,31 @@ function startButtonLogic()
 }
 
 
-
 /*
  * Name: stopButtonLogic
- * Algorithm: calls the function that stops the robot
- *            changes the stop button back to start
+ * Algorithm: calls functions that stop bot and toggle buttons
  * Input/Parameters: none
- * Output: stops robot and changes visible buttons
- * Notes: none
+ * Output: bot stopped and buttons toggled
  */
 function stopButtonLogic()
 {
-  // stop the robot
-  stopRobotLogic()
+  stopBotLogic();
 
-  // show start button and hide stop button
-  document.getElementById("startbutton").classList.toggle("active");
   document.getElementById("stopbutton").classList.toggle("active");
+  document.getElementById("startbutton").classList.toggle("active");
 }
 
-
-
 /*
- * Name: stopRobotLogic
- * Algorithm: calls functions that stop functions of the Duckiebots
- *            either stops signal or sends an interupt stop command
+ * Name: stopBotLogic
+ * Algorithm: stops bot and cancels program
  * Input/Parameters: none
- * Output: calls functions to stop Duckiebot
- * Notes: currently only shows an alert
+ * Output: bot is stopped
  */
-function stopRobotLogic()
+function stopBotLogic()
 {
+  TOF_SENSOR.unsubscribe();
+  setCanceled();
+
   // Stop the bot
   var stop = new ROSLIB.Message(
   {
@@ -309,12 +291,7 @@ function stopRobotLogic()
     vel_right : 0
   });
 
-  setCanceled();
-
   cmdVel.publish(stop);
-
-  document.getElementById("stopbutton").classList.toggle("active");
-  document.getElementById("startbutton").classList.toggle("active");
 }
 
 // when button clicked, simply clear blockly workspace
