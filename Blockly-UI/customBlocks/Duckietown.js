@@ -220,22 +220,15 @@ Blockly.Blocks['getdistancedata'] = {
     // Get the name of the blockly variable we are storing our distance in
     var distance_var = block.getFieldValue('distanceVar');
 
-
     var code =
     `
-    var distance = new ROSLIB.Topic({
-      ros : ros,
-      name : "/" + strippedRobotName + "/front_center_tof_driver_node/range",
-      messageType : "sensor_msgs/Range"
-    });
-    distance.subscribe(function(message) {
+    TOF_SENSOR.subscribe(function(message) {
       `+ distance_var + ` = message.range;
       console.log(` + distance_var + `);
     });
 
-    // Delay to make sure we are actually getting distance data before we enter
-    // the loop
-    await new Promise(r => setTimeout(r, 100));
+    // Delay to make sure we are actually getting distance data before we continue
+    await new Promise(r => setTimeout(r, 200));
     `;
     // TODO: Change ORDER_NONE to the correct strength.
     return code;
