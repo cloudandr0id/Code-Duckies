@@ -209,7 +209,7 @@ Blockly.Blocks['turnright'] = {
 Blockly.Blocks['getdistancedata'] = {
     init: function() {
       this.appendDummyInput()
-          .appendField("Front distance")
+          .appendField("Distance")
       this.setOutput(true, null);
       this.setColour(60);
    this.setTooltip("");
@@ -217,10 +217,7 @@ Blockly.Blocks['getdistancedata'] = {
     }
   };
   Blockly.JavaScript['getdistancedata'] = function(block) {
-    // Subscribe to tof sensor
-    // Get the name of the blockly variable we are storing our distance in
-    // var distance_var = block.getFieldValue('distanceVar');
-
+    // Use far the TOF sensor is storing its data in
     var code =
     `
     __DISTANCE__
