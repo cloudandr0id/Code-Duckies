@@ -40,9 +40,12 @@ Blockly.Blocks['movebot'] = {
     if (!isCanceled[myIdx])
     {
       cmdVel.publish(wheel_power);
+      await new Promise(r => setTimeout(r, 1000 * ` + time + `));
     }
-
-    await new Promise(r => setTimeout(r, 1000 * ` + time + `));
+    else
+    {
+      return;
+    }
     `;
 
     // return the two vars
@@ -225,4 +228,3 @@ Blockly.Blocks['getdistancedata'] = {
     // TODO: Change ORDER_NONE to the correct strength.
     return [code, Blockly.JavaScript.ORDER_NONE];
   };
-  
