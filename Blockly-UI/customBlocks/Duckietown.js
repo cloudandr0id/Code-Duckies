@@ -206,10 +206,8 @@ Blockly.Blocks['turnright'] = {
 Blockly.Blocks['getdistancedata'] = {
     init: function() {
       this.appendDummyInput()
-          .appendField("Store distance data in: ")
-          .appendField(new Blockly.FieldTextInput(''), 'distanceVar');
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
+          .appendField("Front distance")
+      this.setOutput(true, null);
       this.setColour(60);
    this.setTooltip("");
    this.setHelpUrl("");
@@ -218,18 +216,13 @@ Blockly.Blocks['getdistancedata'] = {
   Blockly.JavaScript['getdistancedata'] = function(block) {
     // Subscribe to tof sensor
     // Get the name of the blockly variable we are storing our distance in
-    var distance_var = block.getFieldValue('distanceVar');
+    // var distance_var = block.getFieldValue('distanceVar');
 
     var code =
     `
-    TOF_SENSOR.subscribe(function(message) {
-      `+ distance_var + ` = message.range;
-      console.log(` + distance_var + `);
-    });
-
-    // Delay to make sure we are actually getting distance data before we continue
-    await new Promise(r => setTimeout(r, 200));
+    __DISTANCE__
     `;
     // TODO: Change ORDER_NONE to the correct strength.
-    return code;
+    return [code, Blockly.JavaScript.ORDER_NONE];
   };
+  

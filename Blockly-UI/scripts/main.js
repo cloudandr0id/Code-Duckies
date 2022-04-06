@@ -43,6 +43,10 @@ TOF_SENSOR = new ROSLIB.Topic({
   messageType : "sensor_msgs/Range"
 });
 
+TOF_SENSOR.subscribe(function(message) {
+  __DISTANCE__ = message.range;
+});
+
 // master function to create blockly page
 function buildBlocklyWorkspace()
 {
@@ -275,7 +279,6 @@ function stopButtonLogic()
  */
 function stopBotLogic()
 {
-  TOF_SENSOR.unsubscribe();
   setCanceled();
 
   // Stop the bot
