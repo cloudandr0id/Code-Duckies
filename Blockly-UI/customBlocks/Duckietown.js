@@ -3,7 +3,7 @@ Blockly.Blocks['movebot'] = {
     init: function() {
       this.appendDummyInput()
           .appendField("Linear Velocity:")
-          .appendField(new Blockly.FieldNumber(0, -.4, 1), "v")
+          .appendField(new Blockly.FieldNumber(0, -.4, .4), "v")
           .appendField("Angular Velocity:")
           .appendField(new Blockly.FieldNumber(0, -8, 8), "omega")
           .appendField("Time:")
