@@ -33,8 +33,8 @@ ros.on('close', function() {
 // Publish wheel commands here
 var cmdVel = new ROSLIB.Topic({
   ros : ros,
-  name : '/' + strippedRobotName +'/wheels_driver_node/wheels_cmd',
-  messageType : 'duckietown_msgs/WheelsCmdStamped'
+  name : '/' + strippedRobotName +'/car_cmd_switch_node/cmd',
+  messageType : 'duckietown_msgs/Twist2DStamped'
 });
 
 // Subscribe to TOF sensor here
@@ -303,8 +303,8 @@ function stopBotLogic()
         nanosec : 0
       }
     },
-    vel_left : 0,
-    vel_right : 0
+    v : 0,
+    omega : 0
   });
 
   cmdVel.publish(stop);
@@ -315,7 +315,7 @@ function newProjectLogic ()
 {
   // check that user wants to clear workspace
   let clearResponse = prompt("Are you sure you want to clear your workspace?");
-  
+
   clearResponse = clearResponse.toLowerCase();
 
   if(clearResponse == "yes" || clearResponse == "y" || clearResponse == "yeah")
@@ -324,7 +324,7 @@ function newProjectLogic ()
     Blockly.mainWorkspace.clear();
   }
   // else don't do anything
-  
+
 }
 
 // run the main executables to build blockly workspace
