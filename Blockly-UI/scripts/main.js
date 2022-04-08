@@ -319,7 +319,7 @@ document.getElementById( 'importProject' ).addEventListener( 'click', getFile );
 document.getElementById( 'newProject' ).addEventListener( 'click', newProjectLogic );
 document.getElementById( 'fileName' ).addEventListener( 'change', importBlocksFile );
 // creates listeners to resize the Blockly workspace if the window size changes
-window.addEventListener('resize', false);
+// window.addEventListener('resize', false);
 Blockly.svgResize(demoWorkspace);
 
 
