@@ -19,8 +19,8 @@ Blockly.Blocks['movebot'] = {
 
   Blockly.JavaScript['movebot'] = function(block) {
     // Get vars
-    var number_leftwheel = block.getFieldValue('leftWheel');
-    var number_rightwheel = block.getFieldValue('rightWheel');
+    var leftwheel = block.getFieldValue('leftWheel');
+    var rightwheel = block.getFieldValue('rightWheel');
     var time = block.getFieldValue('time');
 
     // Template code to send to bot
@@ -33,16 +33,19 @@ Blockly.Blocks['movebot'] = {
           nanosec : 0
         }
       },
-      vel_left : ` + number_leftwheel + `,
-      vel_right : ` + number_rightwheel + `
+      vel_left : ` + leftwheel + `,
+      vel_right : ` + rightwheel + `
     });
 
     if (!isCanceled[myIdx])
     {
       cmdVel.publish(wheel_power);
+      await new Promise(r => setTimeout(r, 1000 * ` + time + `));
     }
-
-    await new Promise(r => setTimeout(r, 1000 * ` + time + `));
+    else
+    {
+      return;
+    }
     `;
 
     // return the two vars
@@ -56,7 +59,7 @@ Blockly.Blocks['moveforward'] = {
           .appendField("move forward");
       this.appendDummyInput()
           .appendField("power:")
-          .appendField(new Blockly.FieldNumber(0, -1, 1), "power")
+          .appendField(new Blockly.FieldNumber(0, 0, 1), "power")
           .appendField("time:")
           .appendField(new Blockly.FieldNumber(0,0), "time");
       this.setPreviousStatement(true, null);
@@ -67,21 +70,32 @@ Blockly.Blocks['moveforward'] = {
     }
   };
   Blockly.JavaScript['moveforward'] = function(block) {
-    var number_power = block.getFieldValue('power');
-    var number_time = block.getFieldValue('time');
+    var power = block.getFieldValue('power');
+    var time = block.getFieldValue('time');
     // TODO: Assemble JavaScript into code variable.
     var code =
-    `(() => {var wheel_power = new ROSLIB.Message({
-      data : [` + number_power  + `,` + number_power + `]
+    `
+      var wheel_power = new ROSLIB.Message({
+      header : {
+        stamp : {
+          sec : 0,
+          nanosec : 0
+        }
+      },
+      vel_left : ` + power + `,
+      vel_right : ` + power + `
     });
-    cmdVel.publish(number_power);
 
-    sleep(1000 * ` + number_time +`);
-
-    var stop = new ROSLIB.Message({
-      data : [0,0]
-    });
-    cmdVel.publish(stop);})();\n`;
+    if (!isCanceled[myIdx])
+    {
+      cmdVel.publish(wheel_power);
+      await new Promise(r => setTimeout(r, 1000 * ` + time + `));
+    }
+    else
+    {
+      return;
+    }
+    `;
 
     // return the two vars
     return code;
@@ -94,7 +108,7 @@ Blockly.Blocks['movebackward'] = {
         .appendField("move backward");
     this.appendDummyInput()
         .appendField("power:")
-        .appendField(new Blockly.FieldNumber(0, -1, 1), "power")
+        .appendField(new Blockly.FieldNumber(0, 0, 1), "power")
         .appendField("time:")
         .appendField(new Blockly.FieldNumber(0,0), "time");
     this.setPreviousStatement(true, null);
@@ -105,21 +119,32 @@ Blockly.Blocks['movebackward'] = {
   }
 };
 Blockly.JavaScript['movebackward'] = function(block) {
-  var number_power = block.getFieldValue('power');
-  var number_time = block.getFieldValue('time');
+  var power = block.getFieldValue('power');
+  var time = block.getFieldValue('time');
   // TODO: Assemble JavaScript into code variable.
   var code =
-  `(() => {var wheel_power = new ROSLIB.Message({
-      data : [` + (0 - number_power)  + `,` + (0 - number_power) + `]
+  `
+    var wheel_power = new ROSLIB.Message({
+    header : {
+      stamp : {
+        sec : 0,
+        nanosec : 0
+      }
+    },
+    vel_left : ` + -power + `,
+    vel_right : ` + -power + `
     });
-    cmdVel.publish(wheel_power);
 
-    sleep(1000 * ` + number_time +`);
-
-    var stop = new ROSLIB.Message({
-      data : [0,0]
-    });
-    cmdVel.publish(stop);})();\n`;
+    if (!isCanceled[myIdx])
+    {
+      cmdVel.publish(wheel_power);
+      await new Promise(r => setTimeout(r, 1000 * ` + time + `));
+    }
+    else
+    {
+      return;
+    }
+    `;
 
     // return the two vars
   return code;
@@ -143,21 +168,32 @@ Blockly.Blocks['turnleft'] = {
     }
   };
   Blockly.JavaScript['turnleft'] = function(block) {
-    var number_power = block.getFieldValue('power');
-    var number_time = block.getFieldValue('time');
+    var power = block.getFieldValue('power');
+    var time = block.getFieldValue('time');
     // TODO: Assemble JavaScript into code variable.
     var code =
-    `(() => {var wheel_power = new ROSLIB.Message({
-      data : [` + (0 - number_power)  + `,` + number_power + `]
-    });
-    cmdVel.publish(wheel_power);
+    `
+      var wheel_power = new ROSLIB.Message({
+      header : {
+        stamp : {
+          sec : 0,
+          nanosec : 0
+        }
+      },
+      vel_left : ` + -power + `,
+      vel_right : ` + power + `
+      });
 
-    sleep(1000 * ` + number_time +`);
-
-    var stop = new ROSLIB.Message({
-      data : [0,0]
-    });
-    cmdVel.publish(stop);})();\n`;
+      if (!isCanceled[myIdx])
+      {
+        cmdVel.publish(wheel_power);
+        await new Promise(r => setTimeout(r, 1000 * ` + time + `));
+      }
+      else
+      {
+        return;
+      }
+      `;
 
     // return the two vars
     return code;
@@ -181,31 +217,43 @@ Blockly.Blocks['turnright'] = {
     }
   };
   Blockly.JavaScript['turnright'] = function(block) {
-    var number_power = block.getFieldValue('power');
-    var number_time = block.getFieldValue('time');
+    var power = block.getFieldValue('power');
+    var time = block.getFieldValue('time');
     // TODO: Assemble JavaScript into code variable.
     var code =
-    `(() => {var wheel_power = new ROSLIB.Message({
-      data : [` + number_power  + `,` + (0 - number_power) + `]
-    });
-    cmdVel.publish(wheel_power);
+    `
+      var wheel_power = new ROSLIB.Message({
+      header : {
+        stamp : {
+          sec : 0,
+          nanosec : 0
+        }
+      },
+      vel_left : ` + power + `,
+      vel_right : ` + -power + `
+      });
 
-    sleep(1000 * ` + number_time +`);
-
-    var stop = new ROSLIB.Message({
-      data : [0,0]
-    });
-    cmdVel.publish(stop);})();\n`;
+      if (!isCanceled[myIdx])
+      {
+        cmdVel.publish(wheel_power);
+        await new Promise(r => setTimeout(r, 1000 * ` + time + `));
+      }
+      else
+      {
+        return;
+      }
+      `;
 
     // return the two vars
     return code;
   };
 
 ///////// DISTANCE DATA ///////////////////////////////////////////////////
+// Only use this block once per program
 Blockly.Blocks['getdistancedata'] = {
     init: function() {
       this.appendDummyInput()
-          .appendField("get distance data");
+          .appendField("Distance")
       this.setOutput(true, null);
       this.setColour(60);
    this.setTooltip("");
@@ -213,8 +261,11 @@ Blockly.Blocks['getdistancedata'] = {
     }
   };
   Blockly.JavaScript['getdistancedata'] = function(block) {
-    // TODO: Assemble JavaScript into code variable.
-    var code = '\n';
+    // Use far the TOF sensor is storing its data in
+    var code =
+    `
+    __DISTANCE__
+    `;
     // TODO: Change ORDER_NONE to the correct strength.
     return [code, Blockly.JavaScript.ORDER_NONE];
   };

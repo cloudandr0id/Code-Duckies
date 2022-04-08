@@ -1,10 +1,11 @@
 (function() {
 
-
-
-  // global variables
+// global variables
 var demoWorkspace;
 var robotName = localStorage.getItem("robotName");
+// We need this stripped name to get the topics on the bot
+// NOTE: might be a better way to get bot name
+var strippedRobotName = robotName.replace('.local', '');
 var port = localStorage.getItem("port");
 
 console.log(robotName);
@@ -28,15 +29,23 @@ ros.on('close', function() {
   console.log('Connection to websocket server closed.');
 });
 
-// Publishing a Topic
-// ------------------
-
+// Publish wheel commands here
 var cmdVel = new ROSLIB.Topic({
   ros : ros,
-  name : '/Rogelio/wheels_driver_node/wheels_cmd',
+  name : '/' + strippedRobotName +'/wheels_driver_node/wheels_cmd',
   messageType : 'duckietown_msgs/WheelsCmdStamped'
 });
 
+// Subscribe to TOF sensor here
+TOF_SENSOR = new ROSLIB.Topic({
+  ros : ros,
+  name : "/" + strippedRobotName + "/front_center_tof_driver_node/range",
+  messageType : "sensor_msgs/Range"
+});
+
+TOF_SENSOR.subscribe(function(message) {
+  __DISTANCE__ = message.range;
+});
 
 // master function to create blockly page
 function buildBlocklyWorkspace()
@@ -153,19 +162,6 @@ function importBlocksFile() {
 }
 
 
-
-// Used by blocks
-function sleep(milliseconds)
-{
-    var date = new Date();
-    var curDate = null;
-    do
-    {
-      curDate = new Date();
-    }
-    while(curDate - date < milliseconds);
-}
-
 // Keep track of whether a given program was stopped or not, can keep track of
 // last HISTORY_SIZE executions. 100 should be more than enough for the most
 // part.
@@ -205,11 +201,9 @@ function startButtonLogic()
     // show stop button and hide start button
     document.getElementById("stopbutton").classList.toggle("active");
     document.getElementById("startbutton").classList.toggle("active");
-    
+
     // play sounds
     //tiresPealing.play();
-    // Stop prior program before starting this one
-    stopRobotLogic();
 
     // check for infinite loop
     window.LoopTrap = 1000;
@@ -221,11 +215,12 @@ function startButtonLogic()
     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
 
     // Wrap the returned code in boilerplate
-    code = "(async () => {var myIdx = " + currentIdx + "\n"
+    code = "(async () => {\nvar myIdx = " + currentIdx + "\n"
      + code + "\n" +
-    `if (!isCanceled[myIdx])
+    `
+    if (!isCanceled[myIdx])
     {
-      stopRobotLogic();
+      stopButtonLogic();
     }
     })();`;
 
@@ -243,7 +238,7 @@ function startButtonLogic()
       // Log the error for debugging purposes
       console.log(e);
       // Make sure we stop the bot before alerting just in case
-      stopRobotLogic();
+      stopBotLogic();
       alert(e);
     }
 
@@ -251,6 +246,8 @@ function startButtonLogic()
   else
   {
     // else assume that no blocks have been placed in the workspace
+    // Also stop bot just in case
+    stopBotLogic();
 
     // send alert to window that there should be development before the bot will run
     alert( "You haven't built blocks yet to run" );
@@ -260,37 +257,30 @@ function startButtonLogic()
 }
 
 
-
 /*
  * Name: stopButtonLogic
- * Algorithm: calls the function that stops the robot
- *            changes the stop button back to start
+ * Algorithm: calls functions that stop bot and toggle buttons
  * Input/Parameters: none
- * Output: stops robot and changes visible buttons
- * Notes: none
+ * Output: bot stopped and buttons toggled
  */
 function stopButtonLogic()
 {
-  // stop the robot
-  stopRobotLogic()
+  stopBotLogic();
 
-  // show start button and hide stop button
-  document.getElementById("startbutton").classList.toggle("active");
   document.getElementById("stopbutton").classList.toggle("active");
+  document.getElementById("startbutton").classList.toggle("active");
 }
 
-
-
 /*
- * Name: stopRobotLogic
- * Algorithm: calls functions that stop functions of the Duckiebots
- *            either stops signal or sends an interupt stop command
+ * Name: stopBotLogic
+ * Algorithm: stops bot and cancels program
  * Input/Parameters: none
- * Output: calls functions to stop Duckiebot
- * Notes: currently only shows an alert
+ * Output: bot is stopped
  */
-function stopRobotLogic()
+function stopBotLogic()
 {
+  setCanceled();
+
   // Stop the bot
   var stop = new ROSLIB.Message(
   {
@@ -303,8 +293,6 @@ function stopRobotLogic()
     vel_left : 0,
     vel_right : 0
   });
-
-  setCanceled();
 
   cmdVel.publish(stop);
 }
@@ -331,7 +319,7 @@ document.getElementById( 'importProject' ).addEventListener( 'click', getFile );
 document.getElementById( 'newProject' ).addEventListener( 'click', newProjectLogic );
 document.getElementById( 'fileName' ).addEventListener( 'change', importBlocksFile );
 // creates listeners to resize the Blockly workspace if the window size changes
-window.addEventListener('resize', false);
+// window.addEventListener('resize', false);
 Blockly.svgResize(demoWorkspace);
 
 
