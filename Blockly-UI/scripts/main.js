@@ -3,6 +3,7 @@
 // global variables
 var demoWorkspace;
 var robotName = localStorage.getItem("robotName");
+var projectNum = 0;
 // We need this stripped name to get the topics on the bot
 // NOTE: might be a better way to get bot name
 var strippedRobotName = robotName.replace('.local', '');
@@ -86,10 +87,22 @@ var onresize = function(e) {
 function exportBlocks()
 {
   try {
+    // get blockly workspace
     var xml = Blockly.Xml.workspaceToDom(demoWorkspace);
+
+    // convert to xml text file
     var xml_text = Blockly.Xml.domToText(xml);
+
+    // create file
     var link = document.createElement('a');
-    link.download="project.txt";
+
+    // download file
+    link.download="project(" + projectNum + ").txt";
+
+    // increase projectNum
+    projectNum = projectNum + 1;
+
+
     link.href="data:application/octet-stream;utf-8," + encodeURIComponent(xml_text);
     document.body.appendChild(link);
     link.click();
@@ -300,8 +313,18 @@ function stopBotLogic()
 // when button clicked, simply clear blockly workspace
 function newProjectLogic ()
 {
-  // clear existing workspace
-  Blockly.mainWorkspace.clear();
+  // check that user wants to clear workspace
+  let clearResponse = prompt("Are you sure you want to clear your workspace?");
+  
+  clearResponse = clearResponse.toLowerCase();
+
+  if(clearResponse == "yes" || clearResponse == "y" || clearResponse == "yeah")
+  {
+    // clear existing workspace
+    Blockly.mainWorkspace.clear();
+  }
+  // else don't do anything
+  
 }
 
 // run the main executables to build blockly workspace
