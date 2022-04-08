@@ -2,11 +2,10 @@
 Blockly.Blocks['movebot'] = {
     init: function() {
       this.appendDummyInput()
-          .appendField("Power percentage to:")
-          .appendField("left wheel")
-          .appendField(new Blockly.FieldNumber(0, -1, 1), "leftWheel")
-          .appendField("and right wheel")
-          .appendField(new Blockly.FieldNumber(0, -1, 1), "rightWheel")
+          .appendField("Linear Velocity:")
+          .appendField(new Blockly.FieldNumber(0, -.4, 1), "v")
+          .appendField("Angular Velocity:")
+          .appendField(new Blockly.FieldNumber(0, -8, 8), "omega")
           .appendField("Time:")
           .appendField(new Blockly.FieldNumber(0, 0), "time");
       this.setPreviousStatement(true, null);
@@ -19,8 +18,8 @@ Blockly.Blocks['movebot'] = {
 
   Blockly.JavaScript['movebot'] = function(block) {
     // Get vars
-    var leftwheel = block.getFieldValue('leftWheel');
-    var rightwheel = block.getFieldValue('rightWheel');
+    var v = block.getFieldValue('v');
+    var omega = block.getFieldValue('omega');
     var time = block.getFieldValue('time');
 
     // Template code to send to bot
@@ -33,8 +32,8 @@ Blockly.Blocks['movebot'] = {
           nanosec : 0
         }
       },
-      vel_left : ` + leftwheel + `,
-      vel_right : ` + rightwheel + `
+      v: ` + v + `,
+      omega: ` + omega + `
     });
 
     if (!isCanceled[myIdx])
@@ -58,8 +57,8 @@ Blockly.Blocks['moveforward'] = {
       this.appendDummyInput()
           .appendField("move forward");
       this.appendDummyInput()
-          .appendField("power:")
-          .appendField(new Blockly.FieldNumber(0, 0, 1), "power")
+          .appendField("Forward Velocity:")
+          .appendField(new Blockly.FieldNumber(0, 0, .4), "v")
           .appendField("time:")
           .appendField(new Blockly.FieldNumber(0,0), "time");
       this.setPreviousStatement(true, null);
@@ -70,20 +69,20 @@ Blockly.Blocks['moveforward'] = {
     }
   };
   Blockly.JavaScript['moveforward'] = function(block) {
-    var power = block.getFieldValue('power');
+    var v = block.getFieldValue('v');
     var time = block.getFieldValue('time');
     // TODO: Assemble JavaScript into code variable.
     var code =
     `
-      var wheel_power = new ROSLIB.Message({
+    var wheel_power = new ROSLIB.Message({
       header : {
         stamp : {
           sec : 0,
           nanosec : 0
         }
       },
-      vel_left : ` + power + `,
-      vel_right : ` + power + `
+      v: ` + v + `,
+      omega: 0
     });
 
     if (!isCanceled[myIdx])
@@ -107,8 +106,8 @@ Blockly.Blocks['movebackward'] = {
     this.appendDummyInput()
         .appendField("move backward");
     this.appendDummyInput()
-        .appendField("power:")
-        .appendField(new Blockly.FieldNumber(0, 0, 1), "power")
+        .appendField("Backward velocity:")
+        .appendField(new Blockly.FieldNumber(0, 0, .4), "v")
         .appendField("time:")
         .appendField(new Blockly.FieldNumber(0,0), "time");
     this.setPreviousStatement(true, null);
@@ -119,7 +118,7 @@ Blockly.Blocks['movebackward'] = {
   }
 };
 Blockly.JavaScript['movebackward'] = function(block) {
-  var power = block.getFieldValue('power');
+  var v = block.getFieldValue('power');
   var time = block.getFieldValue('time');
   // TODO: Assemble JavaScript into code variable.
   var code =
@@ -131,8 +130,8 @@ Blockly.JavaScript['movebackward'] = function(block) {
         nanosec : 0
       }
     },
-    vel_left : ` + -power + `,
-    vel_right : ` + -power + `
+    v : ` + -v + `,
+    omega : 0
     });
 
     if (!isCanceled[myIdx])
@@ -156,8 +155,8 @@ Blockly.Blocks['turnleft'] = {
       this.appendDummyInput()
           .appendField("turn left");
       this.appendDummyInput()
-          .appendField("power:")
-          .appendField(new Blockly.FieldNumber(0, -1, 1), "power")
+          .appendField("Angular Velocity:")
+          .appendField(new Blockly.FieldNumber(0, 0, 8), "omega")
           .appendField("time:")
           .appendField(new Blockly.FieldNumber(0,0), "time");
       this.setPreviousStatement(true, null);
@@ -168,7 +167,7 @@ Blockly.Blocks['turnleft'] = {
     }
   };
   Blockly.JavaScript['turnleft'] = function(block) {
-    var power = block.getFieldValue('power');
+    var omega = block.getFieldValue('omega');
     var time = block.getFieldValue('time');
     // TODO: Assemble JavaScript into code variable.
     var code =
@@ -180,8 +179,8 @@ Blockly.Blocks['turnleft'] = {
           nanosec : 0
         }
       },
-      vel_left : ` + -power + `,
-      vel_right : ` + power + `
+      v : 0,
+      omega : ` + omega + `
       });
 
       if (!isCanceled[myIdx])
@@ -205,8 +204,8 @@ Blockly.Blocks['turnright'] = {
       this.appendDummyInput()
           .appendField("turn right");
       this.appendDummyInput()
-          .appendField("power:")
-          .appendField(new Blockly.FieldNumber(0, -1, 1), "power")
+          .appendField("Angular Velocity:")
+          .appendField(new Blockly.FieldNumber(0, 0, 8), "omega")
           .appendField("time:")
           .appendField(new Blockly.FieldNumber(0,0), "time");
       this.setPreviousStatement(true, null);
@@ -217,7 +216,7 @@ Blockly.Blocks['turnright'] = {
     }
   };
   Blockly.JavaScript['turnright'] = function(block) {
-    var power = block.getFieldValue('power');
+    var omega = block.getFieldValue('power');
     var time = block.getFieldValue('time');
     // TODO: Assemble JavaScript into code variable.
     var code =
@@ -229,8 +228,8 @@ Blockly.Blocks['turnright'] = {
           nanosec : 0
         }
       },
-      vel_left : ` + power + `,
-      vel_right : ` + -power + `
+      v : 0,
+      omega : ` + -omega + `
       });
 
       if (!isCanceled[myIdx])
