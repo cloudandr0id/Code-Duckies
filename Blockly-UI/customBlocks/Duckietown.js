@@ -118,7 +118,7 @@ Blockly.Blocks['movebackward'] = {
   }
 };
 Blockly.JavaScript['movebackward'] = function(block) {
-  var v = block.getFieldValue('power');
+  var v = block.getFieldValue('v');
   var time = block.getFieldValue('time');
   // TODO: Assemble JavaScript into code variable.
   var code =
@@ -216,7 +216,7 @@ Blockly.Blocks['turnright'] = {
     }
   };
   Blockly.JavaScript['turnright'] = function(block) {
-    var omega = block.getFieldValue('power');
+    var omega = block.getFieldValue('omega');
     var time = block.getFieldValue('time');
     // TODO: Assemble JavaScript into code variable.
     var code =
