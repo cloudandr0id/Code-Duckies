@@ -173,7 +173,7 @@ function importBlocksFile() {
     }
   }
 
-  // Set the value to null. This will not trigger a reload of the page due to
+  // Set the value to null. This will not trigger a reload of the program due to
   // if (file) above
   document.getElementById("fileName").value = null;
 }
