@@ -172,6 +172,10 @@ function importBlocksFile() {
       console.log("error reading file");
     }
   }
+
+  // Set the value to null. This will not trigger a reload of the page due to
+  // if (file) above
+  document.getElementById("fileName").value = null;
 }
 
 
