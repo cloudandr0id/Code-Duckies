@@ -219,18 +219,12 @@ function setCanceled()
  */
 function startButtonLogic()
 {
-  // initialize function/variables
-  var tiresPealing = new Audio( 'sounds/Tires.m4a' );
-
   // check that there is blocks in the workspace
   if(demoWorkspace.getAllBlocks(false).length != 0)
   {
     // show stop button and hide start button
     document.getElementById("stopbutton").classList.toggle("active");
     document.getElementById("startbutton").classList.toggle("active");
-
-    // play sounds
-    //tiresPealing.play();
 
     // check for infinite loop. If we see one and we are not cancelled we await
     // a promise with a 1ms timeout. This seems to give enough time for the
