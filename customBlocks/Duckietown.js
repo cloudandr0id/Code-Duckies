@@ -6,7 +6,7 @@ Blockly.Blocks['movebot'] = {
       this.appendDummyInput()
           .appendField("Linear Velocity:")
           .appendField(new Blockly.FieldNumber(0, -.4, .4), "v")
-          .appendField("Angular Velocity:")
+          .appendField("Radial Velocity:")
           .appendField(new Blockly.FieldNumber(0, -8, 8), "omega")
           .appendField("Time:")
           .appendField(new Blockly.FieldNumber(0, 0), "time");
@@ -157,7 +157,7 @@ Blockly.Blocks['turnleft'] = {
       this.appendDummyInput()
           .appendField("turn left");
       this.appendDummyInput()
-          .appendField("Angular Velocity:")
+          .appendField("Radial Velocity:")
           .appendField(new Blockly.FieldNumber(0, 0, 8), "omega")
           .appendField("time:")
           .appendField(new Blockly.FieldNumber(0,0), "time");
@@ -206,7 +206,7 @@ Blockly.Blocks['turnright'] = {
       this.appendDummyInput()
           .appendField("turn right");
       this.appendDummyInput()
-          .appendField("Angular Velocity:")
+          .appendField("Radial Velocity:")
           .appendField(new Blockly.FieldNumber(0, 0, 8), "omega")
           .appendField("time:")
           .appendField(new Blockly.FieldNumber(0,0), "time");
@@ -257,7 +257,7 @@ Blockly.Blocks['movebotuntimed'] = {
       this.appendDummyInput()
           .appendField("Linear Velocity:")
           .appendField(new Blockly.FieldNumber(0, -.4, .4), "v")
-          .appendField("Angular Velocity:")
+          .appendField("Radial Velocity:")
           .appendField(new Blockly.FieldNumber(0, -8, 8), "omega");
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
@@ -396,7 +396,7 @@ Blockly.Blocks['turnleftuntimed'] = {
       this.appendDummyInput()
           .appendField("turn left untimed");
       this.appendDummyInput()
-          .appendField("Angular Velocity:")
+          .appendField("Radial Velocity:")
           .appendField(new Blockly.FieldNumber(0, 0, 8), "omega");
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
@@ -441,7 +441,7 @@ Blockly.Blocks['turnrightuntimed'] = {
       this.appendDummyInput()
           .appendField("turn right untimed");
       this.appendDummyInput()
-          .appendField("Angular Velocity:")
+          .appendField("Radial Velocity:")
           .appendField(new Blockly.FieldNumber(0, 0, 8), "omega");
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);

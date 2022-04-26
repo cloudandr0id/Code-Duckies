@@ -47,6 +47,13 @@ TOF_SENSOR.subscribe(function(message) {
   __DISTANCE__ = message.range;
 });
 
+// Subscribe to TOF sensor here
+TOF_SENSOR = new ROSLIB.Topic({
+  ros : ros,
+  name : "/" + strippedRobotName + "/front_center_tof_driver_node/range",
+  messageType : "sensor_msgs/Range"
+});
+
 // master function to create blockly page
 function buildBlocklyWorkspace()
 {
