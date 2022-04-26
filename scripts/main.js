@@ -221,9 +221,32 @@ function startButtonLogic()
     // play sounds
     //tiresPealing.play();
 
+    // check for infinite loop. If we see one and we are not cancelled we await
+    // a promise with a 1ms timeout. This seems to give enough time for the
+    // system to update things like the distance measurement. Without this loop
+    // trap something like
+    // while (true)
+    // {
+    //   while ((__DISTANCE__) <= 0.3)
+    //   {
+    //     // Do something
+    //   }
+    // }
+    // Just gets stuck in the outer while true loop if the inner loop condition
+    // is ever false. With this loop trap that should basically work as expected
+    window.LoopTrap = 1000;
+    Blockly.JavaScript.INFINITE_LOOP_TRAP =
+        `if (--window.LoopTrap <= 0 && !isCanceled[myIdx])
+        {
+          await new Promise(r => setTimeout(r, 1));
+        }
+        else if (isCanceled[myIdx])
+        {
+          return;
+        } \n`;
+
     // turn workspace into JavaScript
     var code = Blockly.JavaScript.workspaceToCode(demoWorkspace);
-    Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
 
     // Wrap the returned code in boilerplate
     code = "(async () => {\nvar myIdx = " + currentIdx + "\n"
