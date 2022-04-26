@@ -13,7 +13,6 @@ console.log(robotName);
 console.log(port);
 
 // Setup ROS stuff
-// old ip: 192.168.62.214
 var ros = new ROSLIB.Ros({
   url : 'ws://' + robotName + ":" + port
 });
@@ -221,11 +220,6 @@ function startButtonLogic()
 
     // play sounds
     //tiresPealing.play();
-
-    // check for infinite loop
-    window.LoopTrap = 1000;
-    Blockly.JavaScript.INFINITE_LOOP_TRAP =
-        'if (--window.LoopTrap === 0) throw "Infinite loop.";\n';
 
     // turn workspace into JavaScript
     var code = Blockly.JavaScript.workspaceToCode(demoWorkspace);
