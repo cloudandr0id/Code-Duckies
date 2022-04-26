@@ -88,7 +88,6 @@ Blockly.Blocks['moveforward'] = {
     if (!isCanceled[myIdx])
     {
       cmdVel.publish(wheel_power);
-      console.log(__DISTANCE__);
       await new Promise(r => setTimeout(r, 1000 * ` + time + `));
     }
     else
