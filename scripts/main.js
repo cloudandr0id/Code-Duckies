@@ -47,12 +47,16 @@ TOF_SENSOR.subscribe(function(message) {
   __DISTANCE__ = message.range;
 });
 
-// Subscribe to TOF sensor here
-TOF_SENSOR = new ROSLIB.Topic({
+// Subscribe to left wheel encoder here
+LEFT_WHEEL_ENCODER = new ROSLIB.Topic({
   ros : ros,
-  name : "/" + strippedRobotName + "/front_center_tof_driver_node/range",
-  messageType : "sensor_msgs/Range"
+  name : "/" + strippedRobotName + "/left_wheel_encoder_node/tick",
+  messageType : "duckietown_msgs/WheelEncoderStamped"
 });
+
+// LEFT_WHEEL_ENCODER.subscribe(function(message) {
+//   __LEFT_TICKS = message.
+// })
 
 // master function to create blockly page
 function buildBlocklyWorkspace()
