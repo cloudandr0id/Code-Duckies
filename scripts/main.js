@@ -36,6 +36,13 @@ var cmdVel = new ROSLIB.Topic({
   messageType : 'duckietown_msgs/Twist2DStamped'
 });
 
+// Quick stop
+var quickStop = new ROSLIB.Topic({
+  ros : ros,
+  name : '/' + strippedRobotName +'/wheels_driver_node/emergency_stop',
+  messageType : 'duckietown_msgs/BoolStamped'
+});
+
 // Subscribe to TOF sensor here
 TOF_SENSOR = new ROSLIB.Topic({
   ros : ros,
@@ -54,9 +61,20 @@ LEFT_WHEEL_ENCODER = new ROSLIB.Topic({
   messageType : "duckietown_msgs/WheelEncoderStamped"
 });
 
-// LEFT_WHEEL_ENCODER.subscribe(function(message) {
-//   __LEFT_TICKS = message.
-// })
+LEFT_WHEEL_ENCODER.subscribe(function(message) {
+  __LEFT_TICKS__ = message.data;
+});
+
+// Subscribe to right wheel encoder here
+RIGHT_WHEEL_ENCODER = new ROSLIB.Topic({
+  ros : ros,
+  name : "/" + strippedRobotName + "/right_wheel_encoder_node/tick",
+  messageType : "duckietown_msgs/WheelEncoderStamped"
+});
+
+RIGHT_WHEEL_ENCODER.subscribe(function(message) {
+  __RIGHT_TICKS__ = message.data;
+});
 
 // master function to create blockly page
 function buildBlocklyWorkspace()
@@ -209,7 +227,6 @@ function setCanceled()
 }
 // This is a lil hacky, but it gets the job done quick
 
-
 /*
  * Name: startButtonLogic
  * Algorithm: Call functions needed to run Blockly blocks for Duckiebots
@@ -227,7 +244,7 @@ function startButtonLogic()
     document.getElementById("startbutton").classList.toggle("active");
 
     // check for infinite loop. If we see one and we are not cancelled we await
-    // a promise with a 1ms timeout. This seems to give enough time for the
+    // a promise with a 0ms timeout. This seems to give enough time for the
     // system to update things like the distance measurement. Without this loop
     // trap something like
     // while (true)
@@ -243,7 +260,7 @@ function startButtonLogic()
     Blockly.JavaScript.INFINITE_LOOP_TRAP =
         `if (--window.LoopTrap <= 0 && !isCanceled[myIdx])
         {
-          await new Promise(r => setTimeout(r, 1));
+          await new Promise(r => setTimeout(r, 0));
         }
         else if (isCanceled[myIdx])
         {
@@ -270,6 +287,21 @@ function startButtonLogic()
     try
     {
       isCanceled[currentIdx] = false;
+
+      // Let the bot move again
+      var start = new ROSLIB.Message(
+      {
+        header : {
+          stamp : {
+            sec : 0,
+            nanosec : 0
+          }
+        },
+        data : false
+      });
+
+      quickStop.publish(start);
+
       eval(code);
     }
     catch (e)
@@ -318,10 +350,25 @@ function stopButtonLogic()
  */
 function stopBotLogic()
 {
-  setCanceled();
-
   // Stop the bot
   var stop = new ROSLIB.Message(
+  {
+    header : {
+      stamp : {
+        sec : 0,
+        nanosec : 0
+      }
+    },
+    data : true
+  });
+
+  quickStop.publish(stop);
+
+  // Cancel the command
+  setCanceled();
+
+  // Set bot velocity to 0
+  var stopVel = new ROSLIB.Message(
   {
     header : {
       stamp : {
@@ -333,7 +380,7 @@ function stopBotLogic()
     omega : 0
   });
 
-  cmdVel.publish(stop);
+  cmdVel.publish(stopVel);
 }
 
 // when button clicked, simply clear blockly workspace

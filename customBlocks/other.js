@@ -51,10 +51,76 @@ Blockly.Blocks['getdistancedata'] = {
     }
   };
   Blockly.JavaScript['getdistancedata'] = function(block) {
-    // Use far the TOF sensor is storing its data in
+    // Use var the TOF sensor is storing its data in
     var code =
     `
     __DISTANCE__
+    `;
+
+    // Return code and order
+    return [code, Blockly.JavaScript.ORDER_NONE];
+  };
+
+///////// GET LEFT WHEEL ENCODER ///////////////////////////////////////////////////
+Blockly.Blocks['getleftwheelencoder'] = {
+    init: function() {
+      this.appendDummyInput()
+          .appendField("Left wheel encoder")
+      this.setOutput(true, null);
+      this.setColour(60);
+   this.setTooltip("");
+   this.setHelpUrl("");
+    }
+  };
+  Blockly.JavaScript['getleftwheelencoder'] = function(block) {
+    // Use var the left wheel encoder is storing its data in
+    var code =
+    `
+    __LEFT_TICKS__
+    `;
+
+    // Return code and order
+    return [code, Blockly.JavaScript.ORDER_NONE];
+  };
+
+///////// GET RIGHT WHEEL ENCODER ///////////////////////////////////////////////////
+Blockly.Blocks['getrightwheelencoder'] = {
+    init: function() {
+      this.appendDummyInput()
+          .appendField("Right wheel encoder")
+      this.setOutput(true, null);
+      this.setColour(60);
+   this.setTooltip("");
+   this.setHelpUrl("");
+    }
+  };
+  Blockly.JavaScript['getrightwheelencoder'] = function(block) {
+    // Use var the right wheel encoder is storing its data in
+    var code =
+    `
+    __RIGHT_TICKS__
+    `;
+
+    // Return code and order
+    return [code, Blockly.JavaScript.ORDER_NONE];
+  };
+
+///////// GET ENCODER AVERAGE ///////////////////////////////////////////////////
+Blockly.Blocks['getencoderaverage'] = {
+    init: function() {
+      this.appendDummyInput()
+          .appendField("Wheel encoder average")
+      this.setOutput(true, null);
+      this.setColour(60);
+   this.setTooltip("");
+   this.setHelpUrl("");
+    }
+  };
+  Blockly.JavaScript['getencoderaverage'] = function(block) {
+    // Use var the right wheel encoder is storing its data in
+    var code =
+    `
+    Math.round((__LEFT_TICKS__ + __RIGHT_TICKS__)  / 2)
     `;
 
     // Return code and order
