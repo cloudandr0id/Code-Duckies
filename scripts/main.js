@@ -23,10 +23,12 @@ ros.on('connection', function() {
 
 ros.on('error', function(error) {
   console.log('Error connecting to websocket server: ', error);
+  alert('Error connecting to websocket server more details in the console.');
 });
 
 ros.on('close', function() {
   console.log('Connection to websocket server closed.');
+  alert('Connection to websocket server closed.');
 });
 
 // Publish wheel commands here
