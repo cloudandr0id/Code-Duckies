@@ -34,6 +34,8 @@ body {
 /* Settings Menu */
 .settingDropdown{
   padding: 0;
+  text-align: right;
+  float:right;
 }
 
 #settingDropBtn {
@@ -46,11 +48,9 @@ body {
 }
 
 .settingDropdown {
-  float: left;
   text-align: left;
   margin: 5px;
   position: relative;
-  display: block;
 }
 
 .settingDropdown:hover #dropdown{
@@ -60,15 +60,14 @@ body {
 #dropdown {
   position: absolute;
   font-family: sans-serif;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 100;
-  padding: 10px;
   color: lightgrey;
   background-color: lightgrey;
   border: 1px solid #000;
-  border-radius: 5px;
   display: none;
+  right: 0;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  z-index: 1;
 }
 
 #dropdown #settingsButton {
@@ -95,7 +94,7 @@ body {
   border-radius: 5px;
   cursor: pointer;
   width: 95%;
-  display: block;
+  display: inline-block;
 }
 
 .settingsButton:hover {
@@ -110,7 +109,7 @@ body {
 
 /* Buttons for start and stop */
 .startStopButtons {
-  text-align: right;
+  float:left;
 }
 
 #stopbutton {
@@ -144,6 +143,7 @@ body {
 
 /* Area for blockly workspace */
 #blocklyDiv {
+  padding-top: 40px;
   height: 100%;
   width: 100%;
 }
