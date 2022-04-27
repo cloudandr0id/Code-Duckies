@@ -9,6 +9,7 @@ var projectNum = 0;
 var strippedRobotName = robotName.replace('.local', '');
 var port = localStorage.getItem("port");
 
+// make sure correct information was grabbed
 console.log(robotName);
 console.log(port);
 
@@ -23,7 +24,7 @@ ros.on('connection', function() {
 
 ros.on('error', function(error) {
   console.log('Error connecting to websocket server: ', error);
-  alert('Error connecting to websocket server more details in the console.');
+  alert("Could not connect to " + robotName + " on port " + port + " more error data can be found in the console.");
 });
 
 ros.on('close', function() {
@@ -84,8 +85,7 @@ function buildBlocklyWorkspace()
 var blocklyArea = document.getElementById('blocklyArea');
 var blocklyDiv = document.getElementById('blocklyDiv');
 demoWorkspace = Blockly.inject(blocklyDiv,
-    {media: '/media/',
-     toolbox: document.getElementById('toolbox')});
+    {toolbox: document.getElementById('toolbox')});
 var onresize = function(e) {
   // Compute the absolute coordinates and dimensions of blocklyArea.
   var element = blocklyArea;
@@ -187,11 +187,20 @@ function importBlocksFile() {
         // create new workspace
         var newWorkspace = Blockly.Xml.textToDom(xml);
 
-        // clear existing workspace
-        Blockly.mainWorkspace.clear();
+        // check that user wants to clear workspace
+        let clearResponse = prompt("Do you want to clear the workspace?");
+
+        clearResponse = clearResponse.toLowerCase();
+
+        if(clearResponse == "yes" || clearResponse == "y" || clearResponse == "yeah")
+        {
+          // clear existing workspace
+          Blockly.mainWorkspace.clear();
+        }
 
         // set new workspace as current one
         Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, newWorkspace);
+
       }
       catch (e)
       {
