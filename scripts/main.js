@@ -350,7 +350,9 @@ function stopButtonLogic()
  */
 function stopBotLogic()
 {
-  // Stop the bot
+  // Stop the bot. This actually prevents the bot from moving at all until it is
+  // set to false. No matter what move commands the bot gets it will not move
+  // while this is true
   var stop = new ROSLIB.Message(
   {
     header : {
