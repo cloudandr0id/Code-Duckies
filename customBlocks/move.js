@@ -2,16 +2,18 @@
 Blockly.Blocks['movebot'] = {
     init: function() {
       this.appendDummyInput()
+          .appendField("move bot");
+      this.appendDummyInput()
           .appendField("Linear Velocity:")
           .appendField(new Blockly.FieldNumber(0, -.4, .4), "v")
-          .appendField("Angular Velocity:")
+          .appendField("Radial Velocity:")
           .appendField(new Blockly.FieldNumber(0, -8, 8), "omega")
           .appendField("Time:")
           .appendField(new Blockly.FieldNumber(0, 0), "time");
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(60);
-   this.setTooltip("Block to provide power to each wheel");
+   this.setTooltip("Block to move and turn");
    this.setHelpUrl("");
     }
   };
@@ -47,7 +49,7 @@ Blockly.Blocks['movebot'] = {
     }
     `;
 
-    // return the two vars
+    // return the code
     return code;
   };
 
@@ -71,7 +73,7 @@ Blockly.Blocks['moveforward'] = {
   Blockly.JavaScript['moveforward'] = function(block) {
     var v = block.getFieldValue('v');
     var time = block.getFieldValue('time');
-    // TODO: Assemble JavaScript into code variable.
+
     var code =
     `
     var wheel_power = new ROSLIB.Message({
@@ -96,7 +98,7 @@ Blockly.Blocks['moveforward'] = {
     }
     `;
 
-    // return the two vars
+    // return the code
     return code;
   };
 
@@ -120,7 +122,7 @@ Blockly.Blocks['movebackward'] = {
 Blockly.JavaScript['movebackward'] = function(block) {
   var v = block.getFieldValue('v');
   var time = block.getFieldValue('time');
-  // TODO: Assemble JavaScript into code variable.
+
   var code =
   `
     var wheel_power = new ROSLIB.Message({
@@ -145,7 +147,7 @@ Blockly.JavaScript['movebackward'] = function(block) {
     }
     `;
 
-    // return the two vars
+    // return the code
   return code;
 };
 
@@ -155,7 +157,7 @@ Blockly.Blocks['turnleft'] = {
       this.appendDummyInput()
           .appendField("turn left");
       this.appendDummyInput()
-          .appendField("Angular Velocity:")
+          .appendField("Radial Velocity:")
           .appendField(new Blockly.FieldNumber(0, 0, 8), "omega")
           .appendField("time:")
           .appendField(new Blockly.FieldNumber(0,0), "time");
@@ -169,7 +171,7 @@ Blockly.Blocks['turnleft'] = {
   Blockly.JavaScript['turnleft'] = function(block) {
     var omega = block.getFieldValue('omega');
     var time = block.getFieldValue('time');
-    // TODO: Assemble JavaScript into code variable.
+
     var code =
     `
       var wheel_power = new ROSLIB.Message({
@@ -194,7 +196,7 @@ Blockly.Blocks['turnleft'] = {
       }
       `;
 
-    // return the two vars
+    // return the code
     return code;
   };
 
@@ -204,7 +206,7 @@ Blockly.Blocks['turnright'] = {
       this.appendDummyInput()
           .appendField("turn right");
       this.appendDummyInput()
-          .appendField("Angular Velocity:")
+          .appendField("Radial Velocity:")
           .appendField(new Blockly.FieldNumber(0, 0, 8), "omega")
           .appendField("time:")
           .appendField(new Blockly.FieldNumber(0,0), "time");
@@ -218,7 +220,7 @@ Blockly.Blocks['turnright'] = {
   Blockly.JavaScript['turnright'] = function(block) {
     var omega = block.getFieldValue('omega');
     var time = block.getFieldValue('time');
-    // TODO: Assemble JavaScript into code variable.
+
     var code =
     `
       var wheel_power = new ROSLIB.Message({
@@ -243,28 +245,6 @@ Blockly.Blocks['turnright'] = {
       }
       `;
 
-    // return the two vars
+    // return the code
     return code;
-  };
-
-///////// DISTANCE DATA ///////////////////////////////////////////////////
-// Only use this block once per program
-Blockly.Blocks['getdistancedata'] = {
-    init: function() {
-      this.appendDummyInput()
-          .appendField("Distance")
-      this.setOutput(true, null);
-      this.setColour(60);
-   this.setTooltip("");
-   this.setHelpUrl("");
-    }
-  };
-  Blockly.JavaScript['getdistancedata'] = function(block) {
-    // Use far the TOF sensor is storing its data in
-    var code =
-    `
-    __DISTANCE__
-    `;
-    // TODO: Change ORDER_NONE to the correct strength.
-    return [code, Blockly.JavaScript.ORDER_NONE];
   };

@@ -4,7 +4,9 @@
   <meta charset="utf-8">
   <title>Programming Tool</title>
   <script src="https://unpkg.com/blockly/blockly.min.js"></script>
-  <script src=customBlocks/Duckietown.js></script>
+  <script src=customBlocks/move.js></script>
+  <script src=customBlocks/untimedMove.js></script>
+  <script src=customBlocks/other.js></script>
   <script src="http://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
   <script src="http://static.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
   <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css">
@@ -145,13 +147,26 @@
 
     <!--- duckietown blocks--->
     <sep></sep>
-    <category name="Duckietown" colour="60">
+    <category name="Move" colour="60">
       <block type="movebot"></block>
       <block type="moveforward"></block>
       <block type="movebackward"></block>
       <block type="turnleft"></block>
       <block type="turnright"></block>
+    </category>
+    <category name="Move Untimed" colour="60">
+      <block type="movebotuntimed"></block>
+      <block type="moveforwarduntimed"></block>
+      <block type="movebackwarduntimed"></block>
+      <block type="turnleftuntimed"></block>
+      <block type="turnrightuntimed"></block>
+    </category>
+    <category name="Other" colour="60">
+      <block type="stop"></block>
       <block type="getdistancedata"></block>
+      <block type="getleftwheelencoder"></block>
+      <block type="getrightwheelencoder"></block>
+      <block type="getencoderaverage"></block>
     </category>
   </xml>
 
