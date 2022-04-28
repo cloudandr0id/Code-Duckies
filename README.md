@@ -5,15 +5,15 @@ Our team has developed a visual programming tool for the Duckietown platform. Th
 ## Use
 Programming a duckiebot developed by MIT's Duckietown by using a Blockly interface instead of C++ and Python code. There are basic blocks but then there are different custom blocks that allow for forward, backwards, left, and right movement. Some more advanced blocks are a distance sensor block and odometry data blocks.
 
-## Team members
+### Team members
 - Ari Jaramillo
 - Anthony Simard
 - Chris Cisneros
 - Daniel Rydberg
 - Jacob Heslop
 
-## Team mentor
+### Team mentor
 - Vova Saruta
 
-## Sponsor
+### Sponsor
 - Dr. Truong Nghiem
